@@ -6,27 +6,35 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.newspetapp.R
+import com.example.newspetapp.databinding.FragmentHomeBinding
+import com.example.newspetapp.databinding.FragmentProfileBinding
+import com.example.newspetapp.presentation.home.HomeFragmentDirections
+import com.example.newspetapp.presentation.home.HomeViewModel
 
 class ProfileFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ProfileFragment()
-    }
-
+    private lateinit var binding: FragmentProfileBinding
     private lateinit var viewModel: ProfileViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.helloUser.setOnClickListener {
+
+            val action = ProfileFragmentDirections.actionProfileFragmentToSavedFragment()
+            findNavController().navigate(action)
+        }
     }
 
 }

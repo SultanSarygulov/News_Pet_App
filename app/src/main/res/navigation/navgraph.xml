@@ -6,15 +6,14 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.example.newspetapp.presentation.search.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
-    <fragment
         android:id="@+id/savedFragment"
         android:name="com.example.newspetapp.presentation.saved.SavedFragment"
         android:label="fragment_saved"
-        tools:layout="@layout/fragment_saved" />
+        tools:layout="@layout/fragment_saved" >
+        <action
+            android:id="@+id/action_savedFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/articleFragment"
         android:name="com.example.newspetapp.presentation.article.ArticleFragment"
@@ -40,5 +39,8 @@
         <action
             android:id="@+id/action_profileFragment_to_savedFragment"
             app:destination="@id/savedFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
     </fragment>
 </navigation>
