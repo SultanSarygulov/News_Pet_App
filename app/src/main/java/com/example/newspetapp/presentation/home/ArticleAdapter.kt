@@ -10,8 +10,13 @@ import com.example.newspetapp.databinding.ItemArticleBinding
 
 class ArticleAdapter: ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(ArticleDiffCallback()) {
 
+    var onArticleClickListener: ((Article) -> Unit)? = null
+    var onSavedClickListener: ((Article) -> Unit)? = null
+
     class ArticleViewHolder(
-        private val binding:ItemArticleBinding
+        private val binding:ItemArticleBinding,
+        private val onArticleClickListener:((Article) -> Unit)?,
+        private val onSavedClickListener:((Article) -> Unit)?
     ): RecyclerView.ViewHolder(binding.root){
 
         fun bind(article: Article) = with(binding){
@@ -20,12 +25,22 @@ class ArticleAdapter: ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(Art
             articleTitle.text = article.title
             articleDate.text = article.date
 
+            articleItem.setOnClickListener {
+
+                onArticleClickListener?.invoke(article)
+            }
+
+            saveArticle.setOnClickListener {
+
+                onSavedClickListener?.invoke(article)
+            }
+
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         val binding = ItemArticleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ArticleViewHolder(binding)
+        return ArticleViewHolder(binding, onArticleClickListener, onSavedClickListener)
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {

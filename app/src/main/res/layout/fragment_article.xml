@@ -1,13 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".presentation.article.ArticleFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:elevation="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+            <ImageView
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="#F2F2F2"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:src="@drawable/ic_arrow_left"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/save_article_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="#F2F2F2"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                app:tint="#494949"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_saved_false" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <ImageView
+            android:id="@+id/this_article_image"
+            android:layout_width="0dp"
+            android:layout_height="480dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/chinese_boy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/this_article_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="72dp"
+            android:text="TextView"
+            android:textColor="#494949"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/this_article_image"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="На снимке Джордж, второй в очереди на престол, сидит на ступеньках в Виндзоре. Вопреки традиции, его сделала фотограф Милли Пилкингтон, а не мать Джорджа, принцесса Уэльская, которая часто фотографировала своих детей на прошлые дни рождения. Принц Джордж только что закончил свой первый год обучения в частной школе Lambrook School в Беркшире, где он учится вместе со своими младшими сестрой и братом, Шарлоттой и Луи, с сентября прошлого года, после того как семья переехала в Виндзор. До этого, пока семья жила в Кенсингтонском дворце, принц Джордж учился в престижной частной школе Thomas's Battersea на юго-западе Лондона. Начало летних каникул принца Джорджа было насыщенным: в прошлое воскресенье он с родителями и 8-летней Шарлоттой смотрел финал Уимблдона, на котором Карлос Алькарас победил Новака Джоковича. За несколько дней до того Джордж с Шарлоттой и Луи посетили авиашоу в Глостершире, а в начале июля принц сходил со своим отцом принцем Уильямом на матч по крикету Ashes в Lord's. Принц Джордж родился 22 июля 2013 года в частной больнице Сент-Мэри в Лондоне." />
+
+        <TextView
+            android:id="@+id/this_article_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="Добавленно 24 июль 2023"
+            android:textColor="#C0C0C0"
+            app:layout_constraintBottom_toBottomOf="@+id/this_article_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/this_article_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="Принцу Джорджу 10 лет: новое фото будущего короля Британии"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textFontWeight="900"
+            app:layout_constraintBottom_toTopOf="@+id/this_article_date"
+            app:layout_constraintEnd_toEndOf="@+id/this_article_date"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/this_article_date" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/this_article_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="#6D8DFF"
+            android:backgroundTint="#6D8DFF"
+            android:text="Спорт"
+            android:textFontWeight="700"
+            android:textColor="@color/white"
+            android:textSize="19sp"
+            app:chipEndPadding="12dp"
+            app:chipStartPadding="12dp"
+            app:closeIconEndPadding="11dp"
+            app:closeIconStartPadding="11dp"
+            app:iconEndPadding="11dp"
+            app:layout_constraintBottom_toTopOf="@+id/this_article_title"
+            app:layout_constraintStart_toStartOf="@+id/this_article_title"
+            app:textEndPadding="11dp"
+            app:textStartPadding="11dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

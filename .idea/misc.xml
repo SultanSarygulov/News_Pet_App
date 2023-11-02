@@ -4,9 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
-        <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_profile.xml" value="0.20416666666666666" />
-        <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/item_article.xml" value="0.3849056603773585" />
+        <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_article.xml" value="0.2" />
+        <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
+        <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/item_article.xml" value="0.25" />
       </map>
     </option>
   </component>
