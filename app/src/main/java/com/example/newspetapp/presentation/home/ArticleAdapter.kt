@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.newspetapp.data.module.Article
 import com.example.newspetapp.databinding.ItemArticleBinding
 
@@ -24,6 +25,10 @@ class ArticleAdapter: ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(Art
             articleCategory.text = article.category
             articleTitle.text = article.title
             articleDate.text = article.date
+            Glide
+                .with(root)
+                .load(article.image)
+                .into(articleImage)
 
             articleItem.setOnClickListener {
 

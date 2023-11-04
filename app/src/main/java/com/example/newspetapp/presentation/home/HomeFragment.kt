@@ -7,15 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.newspetapp.R
 import com.example.newspetapp.data.module.Article
 import com.example.newspetapp.data.module.User
 import com.example.newspetapp.databinding.FragmentHomeBinding
+import com.example.newspetapp.presentation.MainActivity.Companion.IMAGE
+import com.example.newspetapp.presentation.MainActivity.Companion.SAVED_MODE
+import com.example.newspetapp.presentation.MainActivity.Companion.TEXT
+import com.example.newspetapp.presentation.MainActivity.Companion.USER_SULTAN
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeViewModel
+
+//    private val args by navArgs<HomeFragmentArgs>()
+//    private val mode by lazy { args.mode }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +37,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        if (mode == SAVED_MODE && mode != null){
+//
+//            binding.userProfile.visibility == View.GONE
+//        } else {
+//
+//            binding.userProfile.visibility == View.VISIBLE
+//        }
+
         setAdapter()
 
         binding.userProfile.setOnClickListener {
@@ -41,8 +57,8 @@ class HomeFragment : Fragment() {
     private fun setAdapter() {
 
         val articlesList = listOf(
-            Article(0, "Emergency","Hello", "1 ноябрь 2023", TEXT),
-            Article(1, "Nature","World", "2 ноябрь 2023", TEXT)
+            Article(0, "Emergency","Hello", "1 ноябрь 2023", TEXT, IMAGE),
+            Article(1, "Nature","World", "2 ноябрь 2023", TEXT, IMAGE)
         )
 
         val articleAdapter = ArticleAdapter()
@@ -57,9 +73,6 @@ class HomeFragment : Fragment() {
 
     }
 
-    companion object{
-        const val TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sapien erat, scelerisque a pharetra vitae, viverra et nisi. Integer ullamcorper erat sit amet venenatis condimentum. Curabitur nec gravida lectus, ut molestie nisi. Nunc purus velit, aliquam sed varius in, elementum eu nibh. Cras justo turpis, molestie ut nisi aliquet, feugiat placerat augue. Suspendisse potenti. Suspendisse tempus magna quis mi volutpat, non tincidunt metus gravida. Duis aliquam, sem eget finibus pulvinar, arcu ligula vehicula felis, eget laoreet erat nisl nec arcu. Pellentesque erat libero, posuere non tempus sit amet, finibus at augue. Vestibulum sed ornare enim. Aliquam tincidunt dictum turpis quis gravida. Phasellus interdum tristique tellus, eget pulvinar lectus hendrerit vitae. Nulla a viverra diam. Donec quis auctor lorem."
-        val USER_SULTAN = User(0, "Sultan", "sultan@gmail.kg")
-    }
+
 
 }

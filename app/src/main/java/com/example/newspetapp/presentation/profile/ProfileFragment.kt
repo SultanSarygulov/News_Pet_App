@@ -12,10 +12,11 @@ import com.example.newspetapp.R
 import com.example.newspetapp.data.module.Article
 import com.example.newspetapp.databinding.FragmentHomeBinding
 import com.example.newspetapp.databinding.FragmentProfileBinding
+import com.example.newspetapp.presentation.MainActivity.Companion.IMAGE
+import com.example.newspetapp.presentation.MainActivity.Companion.SAVED_MODE
+import com.example.newspetapp.presentation.MainActivity.Companion.TEXT
 import com.example.newspetapp.presentation.home.ArticleAdapter
 import com.example.newspetapp.presentation.home.HomeFragment
-import com.example.newspetapp.presentation.home.HomeFragmentDirections
-import com.example.newspetapp.presentation.home.HomeViewModel
 
 class ProfileFragment : Fragment() {
 
@@ -40,8 +41,8 @@ class ProfileFragment : Fragment() {
         setLayout()
 
         val articlesList = listOf(
-            Article(0, "Emergency","Hello", "1 ноябрь 2023", HomeFragment.TEXT),
-            Article(1, "Nature","World", "2 ноябрь 2023", HomeFragment.TEXT)
+            Article(0, "Emergency","Hello", "1 ноябрь 2023", TEXT, IMAGE),
+            Article(1, "Nature","World", "2 ноябрь 2023", TEXT, IMAGE)
         )
 
         val savedAdapter = ArticleAdapter()
@@ -54,7 +55,13 @@ class ProfileFragment : Fragment() {
 
         binding.showAllSaved.setOnClickListener {
 
-            val action = ProfileFragmentDirections.actionProfileFragmentToSavedFragment()
+            val action = ProfileFragmentDirections.actionProfileFragmentToHomeFragment(SAVED_MODE)
+            findNavController().navigate(action)
+        }
+
+        binding.editProfile.setOnClickListener {
+
+            val action = ProfileFragmentDirections.actionProfileFragmentToEditFragment()
             findNavController().navigate(action)
         }
     }

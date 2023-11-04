@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.newspetapp.R
 import com.example.newspetapp.databinding.FragmentArticleBinding
 
@@ -45,6 +46,10 @@ class ArticleFragment : Fragment() {
         binding.thisArticleTitle.text = article.title
         binding.thisArticleDate.text = "Добавлено ${article.date}"
         binding.thisArticleText.text = article.text
+        Glide
+            .with(requireContext())
+            .load(article.image)
+            .into(binding.thisArticleImage)
     }
 
 }
