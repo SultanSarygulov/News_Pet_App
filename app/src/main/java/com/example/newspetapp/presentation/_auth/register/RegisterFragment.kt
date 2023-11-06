@@ -29,7 +29,9 @@ class RegisterFragment : Fragment() {
 
         binding.registerUserButton.setOnClickListener {
 
-            val action = RegisterFragmentDirections.actionRegisterFragmentToCodeFragment()
+            val email = binding.registerEmail.text.toString()
+
+            val action = RegisterFragmentDirections.actionRegisterFragmentToCodeFragment(email)
             findNavController().navigate(action)
         }
 

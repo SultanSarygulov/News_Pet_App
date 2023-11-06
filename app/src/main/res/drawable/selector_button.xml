@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_enabled="true">
+        <shape>
+            <solid android:color="@color/extra_blue" /> <!-- Default background color -->
+            <corners android:radius="14sp" /> <!-- Rounded corners, adjust as needed -->
+        </shape>
+    </item>
+    <item android:state_enabled="false">
+        <shape>
+            <solid android:color="#F6F6F6" /> <!-- Background color when pressed -->
+            <corners android:radius="14sp" /> <!-- Rounded corners, adjust as needed -->
+        </shape>
+    </item>
+</selector>
