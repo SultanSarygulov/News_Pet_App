@@ -1,11 +1,15 @@
 package com.example.newspetapp.data.module
 
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface Api {
+
+    @Headers("Content-Type: application/json")
+    @POST("users/login/")
+    suspend fun loginUser(
+        @Body data: UserLogin
+    ): Response<Message>
 
     @Headers("Content-Type: application/json")
     @POST("users/register/")
@@ -18,5 +22,14 @@ interface Api {
     suspend fun confirmCode(
         @Body data: ConfirmationCode
     ): Response<Message>
+
+    @Headers("Content-Type: application/json")
+    @PUT("users/change-password/")
+    suspend fun changePassword(
+        @Header("Authorization") accessToken: String,
+        @Body data: PasswordChange
+    ): Response<Message>
+
+
 
 }

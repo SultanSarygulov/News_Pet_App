@@ -137,9 +137,9 @@ class CodeFragment : Fragment() {
 
     private fun setObservers(){
 
-        viewModel.successMessage.observe(viewLifecycleOwner){
+        viewModel.successMessage.observe(viewLifecycleOwner){message ->
 
-            val action = CodeFragmentDirections.actionCodeFragmentToNewPasswordFragment()
+            val action = CodeFragmentDirections.actionCodeFragmentToNewPasswordFragment(message.access)
             findNavController().navigate(action)
         }
 

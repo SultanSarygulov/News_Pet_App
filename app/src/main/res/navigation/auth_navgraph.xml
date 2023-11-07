@@ -59,5 +59,8 @@
         <action
             android:id="@+id/action_newPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <argument
+            android:name="accessToken"
+            app:argType="string" />
     </fragment>
 </navigation>

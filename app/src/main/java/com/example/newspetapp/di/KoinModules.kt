@@ -1,8 +1,11 @@
 package com.example.newspetapp.di
 
 import com.example.newspetapp.data.module.Api
+import com.example.newspetapp.data.module.CustomPreferences
 import com.example.newspetapp.data.repository.AuthRepository
 import com.example.newspetapp.presentation._auth.code.CodeViewModel
+import com.example.newspetapp.presentation._auth.login.LoginViewModel
+import com.example.newspetapp.presentation._auth.new_password.NewPasswordViewModel
 import com.example.newspetapp.presentation._auth.register.RegisterViewModel
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -18,12 +21,15 @@ import java.util.concurrent.TimeUnit
 
     val viewModelModule = module{
 
+        viewModel { LoginViewModel(authRepository = get()) }
         viewModel { RegisterViewModel(authRepository = get()) }
         viewModel { CodeViewModel(authRepository = get()) }
+        viewModel { NewPasswordViewModel(authRepository = get()) }
     }
 
     val retrofitModule = module{
 
+        single { CustomPreferences(androidContext()) }
         single { getOkHttpInstance() }
         single{ getRetrofit(okHttpClient = get())}
         single { getApi(retrofit = get()) }

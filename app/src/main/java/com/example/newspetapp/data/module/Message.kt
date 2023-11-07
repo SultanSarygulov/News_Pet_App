@@ -2,5 +2,7 @@ package com.example.newspetapp.data.module
 
 data class Message(
     val message: String,
-    val error: ErrorMessage
+    val error: ErrorMessage,
+    val refresh: String,
+    val access: String
 )

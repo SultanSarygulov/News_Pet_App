@@ -8,17 +8,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.example.newspetapp.R
+import com.example.newspetapp.data.module.CustomPreferences
 import com.example.newspetapp.databinding.FragmentLoginBinding
 import com.example.newspetapp.databinding.FragmentNewPasswordBinding
 import com.example.newspetapp.presentation.MainActivity
+import com.example.newspetapp.presentation._auth.register.RegisterFragmentDirections
 import com.example.newspetapp.presentation._auth.welcome.WelcomeFragmentDirections
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
+    private val viewModel by viewModel<LoginViewModel>()
+    private val preferences by inject<CustomPreferences>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,17 +38,9 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.loginUserButton.isEnabled = false
+        setObservers()
 
-        binding.loginEmail.addTextChangedListener{
-
-            binding.loginUserButton.isEnabled = areFieldsFilled()
-        }
-
-        binding.loginPasswordEt.addTextChangedListener{
-
-            binding.loginUserButton.isEnabled = areFieldsFilled()
-        }
+        setTextChangedListeners()
 
         binding.loginUserButton.setOnClickListener {
 
@@ -49,17 +48,12 @@ class LoginFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            if(!isDataCorrect()) {
-                binding.loginErrorMessage.visibility = View.VISIBLE
-                binding.loginUserButton.isEnabled = false
-                return@setOnClickListener
-            }
-
             binding.loginErrorMessage.visibility = View.GONE
 
-            val authIntent = Intent(requireContext(), MainActivity::class.java)
-            authIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(authIntent)
+            viewModel.loginUser(
+                binding.loginEmail.text.trim().toString(),
+                binding.loginPasswordEt.text?.trim().toString(),
+            )
         }
 
         binding.createButton.setOnClickListener {
@@ -76,6 +70,38 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun setObservers() {
+        viewModel.successMessage.observe(viewLifecycleOwner){
+
+            preferences.saveToken(it.access)
+
+            Toast.makeText(requireContext(), "Успешеая авторизация", Toast.LENGTH_SHORT).show()
+
+            val authIntent = Intent(requireContext(), MainActivity::class.java)
+            authIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(authIntent)
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner){ error ->
+
+            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+            binding.loginErrorMessage.visibility = View.VISIBLE
+            binding.loginUserButton.isEnabled = false
+        }
+    }
+
+    private fun setTextChangedListeners() {
+        binding.loginUserButton.isEnabled = false
+        binding.loginEmail.addTextChangedListener{
+
+            binding.loginUserButton.isEnabled = areFieldsFilled()
+        }
+        binding.loginPasswordEt.addTextChangedListener{
+
+            binding.loginUserButton.isEnabled = areFieldsFilled()
+        }
+    }
+
     private fun areFieldsFilled(): Boolean {
 
         if (binding.loginEmail.text.toString().isEmpty() ||
@@ -85,17 +111,6 @@ class LoginFragment : Fragment() {
         }
 
         return true
-    }
-
-    private fun isDataCorrect(): Boolean {
-
-
-        if (binding.loginEmail.text.toString() == "ikses.projekto@gmail.com" &&
-            binding.loginPasswordEt.text.toString() == "123456")
-
-            return true
-
-        return false
     }
 
 }
