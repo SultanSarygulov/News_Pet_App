@@ -33,9 +33,13 @@ class LoginFragment : Fragment() {
 
         binding.loginUserButton.isEnabled = false
 
+        binding.loginEmail.addTextChangedListener{
+
+            binding.loginUserButton.isEnabled = areFieldsFilled()
+        }
+
         binding.loginPasswordEt.addTextChangedListener{
 
-            Log.d("CHURA", "changed")
             binding.loginUserButton.isEnabled = areFieldsFilled()
         }
 

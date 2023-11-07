@@ -27,7 +27,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="42dp"
         android:background="@drawable/shape_big_rounded_corners"
         android:backgroundTint="@color/white"
         android:paddingBottom="20dp"
@@ -153,12 +153,12 @@
             android:layout_marginBottom="37dp"
             android:text="Нет профиля?"
             android:textColor="#494949"
-            app:layout_constraintHorizontal_chainStyle="packed"
             android:textFontWeight="900"
             android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/create_button"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView

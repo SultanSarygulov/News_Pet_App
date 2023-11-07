@@ -16,12 +16,15 @@ import androidx.navigation.fragment.navArgs
 import com.example.newspetapp.R
 import com.example.newspetapp.databinding.FragmentCodeBinding
 import com.example.newspetapp.presentation._auth.welcome.WelcomeFragmentDirections
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CodeFragment : Fragment() {
 
     private lateinit var binding: FragmentCodeBinding
     private val args by navArgs<CodeFragmentArgs>()
     private val email by lazy { args.email }
+
+    private val viewModel by viewModel<CodeViewModel>()
 
 
     override fun onCreateView(
@@ -38,6 +41,8 @@ class CodeFragment : Fragment() {
         binding.codeError.visibility = View.GONE
         binding.codeDescription.visibility = View.VISIBLE
         binding.codeDescription.text= "Мы отправили код подтверждения на почту ${email ?: "EMAIL_NULL"}"
+
+        setObservers()
 
         setCodeChangeListeners()
 
@@ -73,6 +78,7 @@ class CodeFragment : Fragment() {
     }
 
     private fun setCodeChangeListeners() {
+
         binding.code1.addTextChangedListener{et->
             if(et.toString().trim().isNotEmpty()){
                 binding.code2.requestFocus()
@@ -120,14 +126,29 @@ class CodeFragment : Fragment() {
                     "${binding.code5.text}" +
                     "${binding.code6.text}"
 
-            if(code == "123456"){
-                val action = CodeFragmentDirections.actionCodeFragmentToNewPasswordFragment()
-                findNavController().navigate(action)
-            } else {
+            sendCode(code)
+        }
+    }
 
-                binding.codeError.visibility = View.VISIBLE
+    private fun sendCode(code: String) {
 
-            }
+        viewModel.confirmCode(code)
+    }
+
+    private fun setObservers(){
+
+        viewModel.successMessage.observe(viewLifecycleOwner){
+
+            val action = CodeFragmentDirections.actionCodeFragmentToNewPasswordFragment()
+            findNavController().navigate(action)
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner){
+
+//            Toast.makeText(requireContext(), "AAAAAAAAAAA", Toast.LENGTH_SHORT).show()
+
+            binding.codeError.visibility = View.VISIBLE
+            binding.codeDescription.visibility = View.GONE
         }
     }
 
