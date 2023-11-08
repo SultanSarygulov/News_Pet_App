@@ -6,19 +6,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.newspetapp.R
+import com.example.newspetapp.data.module.Article
 import com.example.newspetapp.databinding.FragmentArticleBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ArticleFragment : Fragment() {
 
     private lateinit var binding: FragmentArticleBinding
-    private lateinit var viewModel: ArticleViewModel
+    private val viewModel by viewModel<ArticleViewModel>()
 
     private val args by navArgs<ArticleFragmentArgs>()
-    private val article by lazy { args.article }
+//    private val article by lazy { args.article }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +35,9 @@ class ArticleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setLayout()
+        viewModel.readArticle(args.articleId)
+
+        setObservers()
 
         binding.backButton.setOnClickListener {
 
@@ -41,8 +46,15 @@ class ArticleFragment : Fragment() {
 
     }
 
-    private fun setLayout() {
-        binding.thisArticleCategory.text = article.category
+    private fun setObservers() {
+        viewModel.successMessage.observe(viewLifecycleOwner){article ->
+
+            setLayout(article)
+        }
+    }
+
+    private fun setLayout(article: Article) {
+        binding.thisArticleCategory.text = article.category.name
         binding.thisArticleTitle.text = article.title
         binding.thisArticleDate.text = "Добавлено ${article.date}"
         binding.thisArticleText.text = article.text

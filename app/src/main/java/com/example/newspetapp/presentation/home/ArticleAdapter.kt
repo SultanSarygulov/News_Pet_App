@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.newspetapp.R
 import com.example.newspetapp.data.module.Article
 import com.example.newspetapp.databinding.ItemArticleBinding
 
@@ -22,7 +23,7 @@ class ArticleAdapter: ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(Art
 
         fun bind(article: Article) = with(binding){
 
-            articleCategory.text = article.category
+            articleCategory.text = article.category.name
             articleTitle.text = article.title
             articleDate.text = article.date
             Glide
@@ -38,6 +39,14 @@ class ArticleAdapter: ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(Art
             saveArticle.setOnClickListener {
 
                 onSavedClickListener?.invoke(article)
+            }
+
+            if (article.is_favorite){
+
+                saveArticle.setImageResource(R.drawable.ic_saved_true)
+            } else {
+
+                saveArticle.setImageResource(R.drawable.ic_saved_false)
             }
 
         }

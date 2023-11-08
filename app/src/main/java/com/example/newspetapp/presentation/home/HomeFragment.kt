@@ -10,17 +10,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.newspetapp.R
 import com.example.newspetapp.data.module.Article
+import com.example.newspetapp.data.module.CustomPreferences
 import com.example.newspetapp.data.module.User
 import com.example.newspetapp.databinding.FragmentHomeBinding
 import com.example.newspetapp.presentation.MainActivity.Companion.IMAGE
 import com.example.newspetapp.presentation.MainActivity.Companion.SAVED_MODE
 import com.example.newspetapp.presentation.MainActivity.Companion.TEXT
-import com.example.newspetapp.presentation.MainActivity.Companion.USER_SULTAN
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel by viewModel<HomeViewModel>()
+    private val preferences by inject<CustomPreferences>()
 
 //    private val args by navArgs<HomeFragmentArgs>()
 //    private val mode by lazy { args.mode }
@@ -37,6 +40,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val token = "Bearer ${preferences.fetchToken()}"
+        viewModel.getArticles(token)
+
 //        if (mode == SAVED_MODE && mode != null){
 //
 //            binding.userProfile.visibility == View.GONE
@@ -49,25 +55,29 @@ class HomeFragment : Fragment() {
 
         binding.userProfile.setOnClickListener {
 
-            val action = HomeFragmentDirections.actionHomeFragmentToProfileFragment(USER_SULTAN)
+            val action = HomeFragmentDirections.actionHomeFragmentToProfileFragment()
             findNavController().navigate(action)
         }
     }
 
     private fun setAdapter() {
 
-        val articlesList = listOf(
-            Article(0, "Emergency","Hello", "1 ноябрь 2023", TEXT, IMAGE),
-            Article(1, "Nature","World", "2 ноябрь 2023", TEXT, IMAGE)
-        )
 
         val articleAdapter = ArticleAdapter()
         binding.articlesList.adapter = articleAdapter
-        articleAdapter.submitList(articlesList)
+        viewModel.articlesList.observe(viewLifecycleOwner){articlesList ->
+
+            articleAdapter.submitList(articlesList)
+        }
 
         articleAdapter.onArticleClickListener = { article ->
-            val action = HomeFragmentDirections.actionHomeFragmentToArticleFragment(article)
+            val action = HomeFragmentDirections.actionHomeFragmentToArticleFragment(article.id)
             findNavController().navigate(action)
+        }
+
+        articleAdapter.onSavedClickListener = {article ->
+            val token = "Bearer ${preferences.fetchToken()}"
+            viewModel.saveArticle(token, article.id)
         }
 
 

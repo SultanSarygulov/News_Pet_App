@@ -1,12 +1,16 @@
 package com.example.newspetapp.di
 
-import com.example.newspetapp.data.module.Api
+import com.example.newspetapp.data.Api
 import com.example.newspetapp.data.module.CustomPreferences
 import com.example.newspetapp.data.repository.AuthRepository
+import com.example.newspetapp.data.repository.NewsRepository
 import com.example.newspetapp.presentation._auth.code.CodeViewModel
 import com.example.newspetapp.presentation._auth.login.LoginViewModel
 import com.example.newspetapp.presentation._auth.new_password.NewPasswordViewModel
 import com.example.newspetapp.presentation._auth.register.RegisterViewModel
+import com.example.newspetapp.presentation.article.ArticleViewModel
+import com.example.newspetapp.presentation.home.HomeViewModel
+import com.example.newspetapp.presentation.profile.ProfileViewModel
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,6 +29,9 @@ import java.util.concurrent.TimeUnit
         viewModel { RegisterViewModel(authRepository = get()) }
         viewModel { CodeViewModel(authRepository = get()) }
         viewModel { NewPasswordViewModel(authRepository = get()) }
+        viewModel { HomeViewModel(newsRepository = get()) }
+        viewModel { ProfileViewModel(newsRepository = get()) }
+        viewModel { ArticleViewModel(newsRepository = get()) }
     }
 
     val retrofitModule = module{
@@ -34,6 +41,7 @@ import java.util.concurrent.TimeUnit
         single{ getRetrofit(okHttpClient = get())}
         single { getApi(retrofit = get()) }
         factory { AuthRepository(api = get()) }
+        factory { NewsRepository(api = get()) }
     }
 
     fun getApi(retrofit: Retrofit): Api {
