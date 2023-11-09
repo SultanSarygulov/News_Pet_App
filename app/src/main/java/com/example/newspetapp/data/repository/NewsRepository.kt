@@ -1,6 +1,6 @@
 package com.example.newspetapp.data.repository
 
-import com.example.newspetapp.data.Api
+import com.example.newspetapp.data.api.Api
 import com.example.newspetapp.data.module.*
 import retrofit2.Response
 
@@ -9,6 +9,11 @@ class NewsRepository(private val api: Api) {
     suspend fun getArticles(token: String): Response<ArticlesList>{
 
         return api.getArticles(token)
+    }
+
+    suspend fun getArticlesByCategory(token: String, category: String): Response<ArticlesList>{
+
+        return api.getArticlesByCategory(token, category)
     }
 
     suspend fun readArticle(id: Int): Response<Article>{
@@ -26,13 +31,18 @@ class NewsRepository(private val api: Api) {
         return api.saveArticle(token, articleId)
     }
 
+    suspend fun removeArticle(token: String, articleId: Int): Response<Message>{
+
+        return api.removeArticle(token, articleId)
+    }
+
     suspend fun getUserInfo(token: String): Response<UserProfile>{
 
         return api.getUserInfo(token)
     }
 
-    suspend fun userProfile(token: String, user: User): Response<UserProfile>{
+    suspend fun editUserInfo(token: String, user: User): Response<Message>{
 
-        return api.userProfile(token, user)
+        return api.editUserInfo(token, user)
     }
 }

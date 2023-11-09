@@ -2,6 +2,7 @@ package com.example.newspetapp.presentation.home
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,12 +19,14 @@ import com.example.newspetapp.presentation.MainActivity.Companion.SAVED_MODE
 import com.example.newspetapp.presentation.MainActivity.Companion.TEXT
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Exception
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel by viewModel<HomeViewModel>()
     private val preferences by inject<CustomPreferences>()
+    val token by lazy {   "Bearer ${preferences.fetchToken()}"}
 
 //    private val args by navArgs<HomeFragmentArgs>()
 //    private val mode by lazy { args.mode }
@@ -42,6 +45,8 @@ class HomeFragment : Fragment() {
 
         val token = "Bearer ${preferences.fetchToken()}"
         viewModel.getArticles(token)
+
+        setChips()
 
 //        if (mode == SAVED_MODE && mode != null){
 //
@@ -77,10 +82,38 @@ class HomeFragment : Fragment() {
 
         articleAdapter.onSavedClickListener = {article ->
             val token = "Bearer ${preferences.fetchToken()}"
-            viewModel.saveArticle(token, article.id)
+            if(article.is_favorite){
+                viewModel.removeArticle(token, article.id)
+            } else {
+                viewModel.saveArticle(token, article.id)
+            }
+
+            viewModel.getArticles(token)
         }
 
 
+    }
+
+    private fun setChips() {
+
+        binding.chipGroup.setOnCheckedStateChangeListener { cg, ids->
+
+
+            val checkedId = try {
+                ids[0]
+            } catch (e: Exception){
+                0
+            }
+
+            when(checkedId){
+                binding.all.id -> viewModel.getArticles(token)
+                binding.sport.id -> viewModel.getArticlesByCategory(token,"Спорт")
+                binding.science.id -> viewModel.getArticlesByCategory(token,"Наука")
+                binding.art.id -> viewModel.getArticlesByCategory(token,"Искусство")
+                0 -> viewModel.getArticles(token)
+
+            }
+        }
     }
 
 

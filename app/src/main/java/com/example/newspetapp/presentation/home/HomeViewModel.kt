@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newspetapp.data.module.AddToFavourites
 import com.example.newspetapp.data.module.Article
+import com.example.newspetapp.data.module.Category
 import com.example.newspetapp.data.repository.NewsRepository
 import com.example.newspetapp.di.Constants.TAG
 import kotlinx.coroutines.launch
@@ -31,6 +32,22 @@ class HomeViewModel(private val newsRepository: NewsRepository) : ViewModel() {
         }
     }
 
+    fun getArticlesByCategory(token: String, category: String){
+
+        viewModelScope.launch {
+
+            val response = newsRepository.getArticlesByCategory(token, category)
+
+            if(response.isSuccessful){
+
+                articlesList.postValue(response.body()?.results)
+            } else {
+
+                errorMessage.postValue("ERROR")
+            }
+        }
+    }
+
     fun saveArticle(token: String, articleId: Int){
 
         viewModelScope.launch {
@@ -38,6 +55,23 @@ class HomeViewModel(private val newsRepository: NewsRepository) : ViewModel() {
             val articleId = AddToFavourites(articleId)
 
             val response = newsRepository.saveArticle(token, articleId)
+
+            if(response.isSuccessful){
+
+//                articlesList.postValue(response.body())
+                Log.d(TAG, "saveArticle: Success")
+            } else {
+
+                errorMessage.postValue("ERROR")
+            }
+        }
+    }
+
+    fun removeArticle(token: String, articleId: Int){
+
+        viewModelScope.launch {
+
+            val response = newsRepository.removeArticle(token, articleId)
 
             if(response.isSuccessful){
 

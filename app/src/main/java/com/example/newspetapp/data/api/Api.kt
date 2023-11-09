@@ -1,4 +1,4 @@
-package com.example.newspetapp.data
+package com.example.newspetapp.data.api
 
 import com.example.newspetapp.data.module.*
 import retrofit2.Response
@@ -36,6 +36,12 @@ interface Api {
         @Header("Authorization") accessToken: String,
     ): Response<ArticlesList>
 
+    @GET("news/list/")
+    suspend fun getArticlesByCategory(
+        @Header("Authorization") accessToken: String,
+        @Query("category_name") category: String
+    ): Response<ArticlesList>
+
     @GET("news/favorites-news-list/")
     suspend fun getSavedArticles(
         @Header("Authorization") accessToken: String,
@@ -53,22 +59,23 @@ interface Api {
         @Body data: AddToFavourites
     ): Response<Message>
 
-    @DELETE("news/remove-from-favorites/")
+    @Headers("Content-Type: application/json")
+    @DELETE("news/remove-from-favorites/{news_id}/")
     suspend fun removeArticle(
         @Header("Authorization") accessToken: String,
-        @Body data: AddToFavourites
+        @Query("news_id") articleId: Int
     ): Response<Message>
 
     @GET("users/me/")
     suspend fun getUserInfo(
-        @Header("Authorization") accessToken: String
+        @Header("Authorization") accessToken: String,
     ): Response<UserProfile>
 
     @PUT("users/user-profile/")
-    suspend fun userProfile(
+    suspend fun editUserInfo(
         @Header("Authorization") accessToken: String,
         @Body data: User
-    ): Response<UserProfile>
+    ): Response<Message>
 
 
 

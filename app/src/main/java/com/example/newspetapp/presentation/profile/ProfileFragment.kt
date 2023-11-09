@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.newspetapp.R
 import com.example.newspetapp.data.module.Article
 import com.example.newspetapp.data.module.CustomPreferences
+import com.example.newspetapp.data.module.User
 import com.example.newspetapp.data.module.UserProfile
 import com.example.newspetapp.databinding.DialogLogoutBinding
 import com.example.newspetapp.databinding.FragmentHomeBinding
@@ -33,6 +34,8 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private val viewModel by viewModel<ProfileViewModel>()
     private val preferences by inject<CustomPreferences>()
+
+//    private lateinit var userProfile: UserProfile
 
 
     override fun onCreateView(
@@ -69,7 +72,18 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        binding.leaveProfile.setOnClickListener {
+
+            findNavController().navigateUp()
+        }
+
         binding.editProfile.setOnClickListener {
+
+//            val userProfile = UserProfile(
+//                binding.userEmail.text.toString(),
+//                binding.userName.text.toString(),
+//                binding.userProfilePicture.drawable.toString()
+//            )
 
             val action = ProfileFragmentDirections.actionProfileFragmentToEditFragment()
             findNavController().navigate(action)
@@ -81,12 +95,13 @@ class ProfileFragment : Fragment() {
         }
     }
 
+
+
     private fun setObservers() {
         val token = "Bearer ${preferences.fetchToken()}"
         viewModel.getUserInfo(token)
 
         viewModel.userInfo.observe(viewLifecycleOwner){user ->
-
             setLayout(user)
         }
     }
@@ -114,7 +129,7 @@ class ProfileFragment : Fragment() {
         binding.userEmail.text = user.email
         Glide
             .with(requireContext())
-            .load(user.pictures)
+            .load(user.pictures ?: R.drawable.ic_null_pfp)
             .into(binding.userProfilePicture)
     }
 

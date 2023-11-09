@@ -49,5 +49,9 @@
         android:id="@+id/editFragment"
         android:name="com.example.newspetapp.presentation.edit.EditFragment"
         android:label="fragment_edit"
-        tools:layout="@layout/fragment_edit" />
+        tools:layout="@layout/fragment_edit" >
+        <action
+            android:id="@+id/action_editFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

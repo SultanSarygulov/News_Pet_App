@@ -79,10 +79,11 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/all"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:background="@drawable/shape_rounded_corners"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Все"
-                app:chipCornerRadius="5dp" />
+                app:chipCornerRadius="50dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/sport"
@@ -90,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Спорт"
-                app:chipCornerRadius="5dp" />
+                app:chipCornerRadius="50dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/science"
@@ -98,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Наука"
-                app:chipCornerRadius="5dp" />
+                app:chipCornerRadius="50dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/art"
@@ -106,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Искусство"
-                app:chipCornerRadius="5dp" />
+                app:chipCornerRadius="50dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/politics"
@@ -114,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Политика"
-                app:chipCornerRadius="5dp" />
+                app:chipCornerRadius="50dp" />
         </com.google.android.material.chip.ChipGroup>
 
     </HorizontalScrollView>

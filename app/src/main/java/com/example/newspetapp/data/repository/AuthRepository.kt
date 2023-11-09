@@ -1,6 +1,6 @@
 package com.example.newspetapp.data.repository
 
-import com.example.newspetapp.data.Api
+import com.example.newspetapp.data.api.Api
 import com.example.newspetapp.data.module.*
 import retrofit2.Response
 

@@ -1,6 +1,6 @@
 package com.example.newspetapp.di
 
-import com.example.newspetapp.data.Api
+import com.example.newspetapp.data.api.Api
 import com.example.newspetapp.data.module.CustomPreferences
 import com.example.newspetapp.data.repository.AuthRepository
 import com.example.newspetapp.data.repository.NewsRepository
@@ -9,6 +9,7 @@ import com.example.newspetapp.presentation._auth.login.LoginViewModel
 import com.example.newspetapp.presentation._auth.new_password.NewPasswordViewModel
 import com.example.newspetapp.presentation._auth.register.RegisterViewModel
 import com.example.newspetapp.presentation.article.ArticleViewModel
+import com.example.newspetapp.presentation.edit.EditViewModel
 import com.example.newspetapp.presentation.home.HomeViewModel
 import com.example.newspetapp.presentation.profile.ProfileViewModel
 import com.google.gson.GsonBuilder
@@ -32,6 +33,7 @@ import java.util.concurrent.TimeUnit
         viewModel { HomeViewModel(newsRepository = get()) }
         viewModel { ProfileViewModel(newsRepository = get()) }
         viewModel { ArticleViewModel(newsRepository = get()) }
+        viewModel { EditViewModel(newsRepository = get()) }
     }
 
     val retrofitModule = module{
