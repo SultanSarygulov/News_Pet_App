@@ -37,6 +37,12 @@ interface Api {
     ): Response<ArticlesList>
 
     @GET("news/list/")
+    suspend fun searchArticles(
+        @Header("Authorization") accessToken: String,
+        @Query("search") searchQuery: String
+    ): Response<ArticlesList>
+
+    @GET("news/list/")
     suspend fun getArticlesByCategory(
         @Header("Authorization") accessToken: String,
         @Query("category_name") category: String
@@ -63,7 +69,7 @@ interface Api {
     @DELETE("news/remove-from-favorites/{news_id}/")
     suspend fun removeArticle(
         @Header("Authorization") accessToken: String,
-        @Query("news_id") articleId: Int
+        @Path("news_id") articleId: Int
     ): Response<Message>
 
     @GET("users/me/")

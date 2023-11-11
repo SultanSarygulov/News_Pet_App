@@ -68,7 +68,7 @@ class ProfileFragment : Fragment() {
 
         binding.showAllSaved.setOnClickListener {
 
-            val action = ProfileFragmentDirections.actionProfileFragmentToHomeFragment(SAVED_MODE)
+            val action = ProfileFragmentDirections.actionProfileFragmentToSavedFragment()
             findNavController().navigate(action)
         }
 
@@ -78,12 +78,6 @@ class ProfileFragment : Fragment() {
         }
 
         binding.editProfile.setOnClickListener {
-
-//            val userProfile = UserProfile(
-//                binding.userEmail.text.toString(),
-//                binding.userName.text.toString(),
-//                binding.userProfilePicture.drawable.toString()
-//            )
 
             val action = ProfileFragmentDirections.actionProfileFragmentToEditFragment()
             findNavController().navigate(action)

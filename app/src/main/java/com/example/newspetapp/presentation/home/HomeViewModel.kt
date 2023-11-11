@@ -48,6 +48,22 @@ class HomeViewModel(private val newsRepository: NewsRepository) : ViewModel() {
         }
     }
 
+    fun searchArticles(token: String, query: String){
+
+        viewModelScope.launch {
+
+            val response = newsRepository.searchArticles(token, query)
+
+            if(response.isSuccessful){
+
+                articlesList.postValue(response.body()?.results)
+            } else {
+
+                errorMessage.postValue("ERROR")
+            }
+        }
+    }
+
     fun saveArticle(token: String, articleId: Int){
 
         viewModelScope.launch {

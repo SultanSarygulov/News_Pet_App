@@ -16,11 +16,12 @@
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_article.xml" value="0.25" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_code.xml" value="0.33" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_edit.xml" value="0.25" />
-        <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_home.xml" value="0.16" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_login.xml" value="0.25" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_new_password.xml" value="0.2" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_register.xml" value="0.2" />
+        <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_saved.xml" value="0.20416666666666666" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_welcome.xml" value="0.2" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/item_article.xml" value="0.25" />
       </map>

@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.newspetapp.R
@@ -14,6 +16,7 @@ import com.example.newspetapp.data.module.Article
 import com.example.newspetapp.data.module.CustomPreferences
 import com.example.newspetapp.data.module.User
 import com.example.newspetapp.databinding.FragmentHomeBinding
+import com.example.newspetapp.di.Constants.TAG
 import com.example.newspetapp.presentation.MainActivity.Companion.IMAGE
 import com.example.newspetapp.presentation.MainActivity.Companion.SAVED_MODE
 import com.example.newspetapp.presentation.MainActivity.Companion.TEXT
@@ -21,15 +24,12 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel by viewModel<HomeViewModel>()
     private val preferences by inject<CustomPreferences>()
     val token by lazy {   "Bearer ${preferences.fetchToken()}"}
-
-//    private val args by navArgs<HomeFragmentArgs>()
-//    private val mode by lazy { args.mode }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,15 +46,10 @@ class HomeFragment : Fragment() {
         val token = "Bearer ${preferences.fetchToken()}"
         viewModel.getArticles(token)
 
+
         setChips()
 
-//        if (mode == SAVED_MODE && mode != null){
-//
-//            binding.userProfile.visibility == View.GONE
-//        } else {
-//
-//            binding.userProfile.visibility == View.VISIBLE
-//        }
+        binding.searchNews.setOnQueryTextListener(this)
 
         setAdapter()
 
@@ -87,8 +82,6 @@ class HomeFragment : Fragment() {
             } else {
                 viewModel.saveArticle(token, article.id)
             }
-
-            viewModel.getArticles(token)
         }
 
 
@@ -116,6 +109,18 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onQueryTextSubmit(query: String?): Boolean {
+
+
+        return false
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if (!query.isNullOrEmpty()){
+            viewModel.searchArticles(token, query)
+        }
+        return true
+    }
 
 
 }

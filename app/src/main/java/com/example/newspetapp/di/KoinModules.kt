@@ -12,6 +12,7 @@ import com.example.newspetapp.presentation.article.ArticleViewModel
 import com.example.newspetapp.presentation.edit.EditViewModel
 import com.example.newspetapp.presentation.home.HomeViewModel
 import com.example.newspetapp.presentation.profile.ProfileViewModel
+import com.example.newspetapp.presentation.saved.SavedViewModel
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -34,6 +35,7 @@ import java.util.concurrent.TimeUnit
         viewModel { ProfileViewModel(newsRepository = get()) }
         viewModel { ArticleViewModel(newsRepository = get()) }
         viewModel { EditViewModel(newsRepository = get()) }
+        viewModel { SavedViewModel(newsRepository = get()) }
     }
 
     val retrofitModule = module{

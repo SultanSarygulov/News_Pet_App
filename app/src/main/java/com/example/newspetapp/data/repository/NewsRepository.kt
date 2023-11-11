@@ -16,6 +16,11 @@ class NewsRepository(private val api: Api) {
         return api.getArticlesByCategory(token, category)
     }
 
+    suspend fun searchArticles(token: String, query: String): Response<ArticlesList>{
+
+        return api.searchArticles(token, query)
+    }
+
     suspend fun readArticle(id: Int): Response<Article>{
 
         return api.readArticle(id)
