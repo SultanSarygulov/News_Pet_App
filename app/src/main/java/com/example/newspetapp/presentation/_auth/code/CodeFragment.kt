@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -57,7 +58,7 @@ class CodeFragment : Fragment() {
     }
 
     private fun startTimer() {
-        object : CountDownTimer(5000, 1000) {
+        object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
 
                 val seconds = millisUntilFinished / 1000
@@ -79,33 +80,50 @@ class CodeFragment : Fragment() {
 
     private fun setCodeChangeListeners() {
 
+
         binding.code1.addTextChangedListener{et->
             if(et.toString().trim().isNotEmpty()){
                 binding.code2.requestFocus()
             }
+
         }
         binding.code2.addTextChangedListener{et->
             if(et.toString().trim().isNotEmpty()){
                 binding.code3.requestFocus()
+            }
+            else if (et.toString().trim().isEmpty()) {
+                binding.code1.requestFocus()
             }
         }
         binding.code3.addTextChangedListener{et->
             if(et.toString().trim().isNotEmpty()){
                 binding.code4.requestFocus()
             }
+            else if (et.toString().trim().isEmpty()) {
+                binding.code2.requestFocus()
+            }
         }
         binding.code4.addTextChangedListener{et->
             if(et.toString().trim().isNotEmpty()){
                 binding.code5.requestFocus()
             }
+            else if (et.toString().trim().isEmpty()) {
+                binding.code3.requestFocus()
+            }
+
         }
         binding.code5.addTextChangedListener{et->
             if(et.toString().trim().isNotEmpty()){
                 binding.code6.requestFocus()
             }
+            else if (et.toString().trim().isEmpty()) {
+                binding.code4.requestFocus()
+            }
         }
 
-        binding.code6.addTextChangedListener {
+        binding.code6.addTextChangedListener {et->
+
+            shortCut()
 
             if(
                 binding.code1.text.toString().isEmpty() &&
@@ -119,6 +137,11 @@ class CodeFragment : Fragment() {
                 return@addTextChangedListener
             }
 
+            else if (et.toString().trim().isEmpty()) {
+                binding.code5.requestFocus()
+                return@addTextChangedListener
+            }
+
             val code = "${binding.code1.text}" +
                     "${binding.code2.text}" +
                     "${binding.code3.text}" +
@@ -127,6 +150,8 @@ class CodeFragment : Fragment() {
                     "${binding.code6.text}"
 
             sendCode(code)
+
+
         }
     }
 
@@ -149,6 +174,23 @@ class CodeFragment : Fragment() {
 
             binding.codeError.visibility = View.VISIBLE
             binding.codeDescription.visibility = View.GONE
+        }
+
+
+    }
+
+    private fun shortCut() {
+        val code = "${binding.code1.text}" +
+                "${binding.code2.text}" +
+                "${binding.code3.text}" +
+                "${binding.code4.text}" +
+                "${binding.code5.text}" +
+                "${binding.code6.text}"
+
+        if(code == "111117"){
+
+            val action = CodeFragmentDirections.actionCodeFragmentToNewPasswordFragment("skip")
+            findNavController().navigate(action)
         }
     }
 

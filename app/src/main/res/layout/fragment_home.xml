@@ -57,7 +57,6 @@
     </TableLayout>
 
 
-
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="0dp"
@@ -79,9 +78,9 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/all"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:background="@drawable/shape_rounded_corners"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/shape_rounded_corners"
                 android:text="Все"
                 app:chipCornerRadius="50dp" />
 
@@ -120,6 +119,39 @@
 
     </HorizontalScrollView>
 
+    <LinearLayout
+        android:id="@+id/nothing_found_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+
+        <ImageView
+            android:id="@+id/nothing_found_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/small_rounded_corners"
+            android:backgroundTint="#F6F6F6"
+            android:padding="5dp"
+            android:src="@drawable/ic_search" />
+
+        <TextView
+            android:id="@+id/nothing_found_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:text="Ничего не найдено"
+            android:textColor="#C0C0C0"
+            android:textSize="16dp" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/articles_list"
         android:layout_width="match_parent"
@@ -128,6 +160,6 @@
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-        tools:listitem="@layout/item_article" />
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

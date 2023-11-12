@@ -68,6 +68,13 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         viewModel.articlesList.observe(viewLifecycleOwner){articlesList ->
 
             articleAdapter.submitList(articlesList)
+
+            if(articlesList.isEmpty()){
+
+                binding.nothingFoundLayout.visibility = View.VISIBLE
+            } else {
+                binding.nothingFoundLayout.visibility = View.GONE
+            }
         }
 
         articleAdapter.onArticleClickListener = { article ->
@@ -75,9 +82,10 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             findNavController().navigate(action)
         }
 
-        articleAdapter.onSavedClickListener = {article ->
+        articleAdapter.onSavedClickListener = {article, isSaved->
             val token = "Bearer ${preferences.fetchToken()}"
-            if(article.is_favorite){
+            Log.d(TAG, "setAdapter: ${article.is_favorite}")
+            if(isSaved){
                 viewModel.removeArticle(token, article.id)
             } else {
                 viewModel.saveArticle(token, article.id)
@@ -103,6 +111,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
                 binding.sport.id -> viewModel.getArticlesByCategory(token,"Спорт")
                 binding.science.id -> viewModel.getArticlesByCategory(token,"Наука")
                 binding.art.id -> viewModel.getArticlesByCategory(token,"Искусство")
+                binding.politics.id -> viewModel.getArticlesByCategory(token,"Политика")
                 0 -> viewModel.getArticles(token)
 
             }

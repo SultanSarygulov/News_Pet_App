@@ -55,16 +55,7 @@ class ProfileFragment : Fragment() {
         setObservers()
 
 
-        val savedAdapter = ArticleAdapter()
-        binding.savedList.adapter = savedAdapter
-        viewModel.savedArticlesList.observe(viewLifecycleOwner){ articlesList ->
-
-            savedAdapter.submitList(articlesList)
-        }
-        savedAdapter.onArticleClickListener = {article ->
-            val action = ProfileFragmentDirections.actionProfileFragmentToArticleFragment(article.id)
-            findNavController().navigate(action)
-        }
+        setAdapter()
 
         binding.showAllSaved.setOnClickListener {
 
@@ -89,6 +80,27 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun setAdapter() {
+        val savedAdapter = ArticleAdapter()
+        binding.savedList.adapter = savedAdapter
+        viewModel.savedArticlesList.observe(viewLifecycleOwner){ articlesList ->
+
+            savedAdapter.submitList(articlesList)
+        }
+
+        savedAdapter.onArticleClickListener = {article ->
+            val action = ProfileFragmentDirections.actionProfileFragmentToArticleFragment(article.id)
+            findNavController().navigate(action)
+        }
+        savedAdapter.onSavedClickListener = {article, isSaved ->
+            val token = "Bearer ${preferences.fetchToken()}"
+            if(isSaved){
+                viewModel.removeArticle(token, article.id)
+            } else {
+                viewModel.saveArticle(token, article.id)
+            }
+        }
+    }
 
 
     private fun setObservers() {

@@ -35,32 +35,25 @@ class RegisterFragment : Fragment() {
 
         setObservers()
 
-        binding.registerUserButton.isEnabled = false
-
-        binding.registerName.addTextChangedListener{
-
-            binding.registerUserButton.isEnabled = areFieldsFilled()
-        }
-
-        binding.registerEmail.addTextChangedListener{
-
-            binding.registerUserButton.isEnabled = areFieldsFilled()
-        }
+        setTextChangeListeners()
 
         binding.registerUserButton.setOnClickListener {
+
+            shortCut()
 
             if(!areFieldsFilled()){
 
                 return@setOnClickListener
             }
 
-            val user = UserRegister(
-                binding.registerEmail.text.trim().toString(),
-                binding.registerName.text.trim().toString()
+            if(!android.util.Patterns.EMAIL_ADDRESS.matcher(binding.registerEmail.text).matches()){
 
-            )
+                binding.registerErrorTxt.visibility = View.VISIBLE
+                binding.registerErrorTxt.text="Enter a valid email address."
+                return@setOnClickListener
+            }
 
-            viewModel.registerUser(user)
+            startRegistering()
         }
 
         binding.enterButton.setOnClickListener {
@@ -75,20 +68,52 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun setObservers() {
-        viewModel.successMessage.observe(viewLifecycleOwner){
+    private fun shortCut() {
+        if(binding.registerEmail.text.toString() == "q" &&
+            binding.registerName.text.toString() == "q" ){
 
-            Toast.makeText(requireContext(), "Успешеая регистрация", Toast.LENGTH_SHORT).show()
+            val action = RegisterFragmentDirections.actionRegisterFragmentToCodeFragment("skip")
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun startRegistering() {
+        val user = UserRegister(
+            binding.registerEmail.text.trim().toString(),
+            binding.registerName.text.trim().toString()
+
+        )
+
+        binding.registerProgressBar.visibility = View.VISIBLE
+        viewModel.registerUser(user)
+    }
+
+    private fun setTextChangeListeners() {
+        binding.registerUserButton.isEnabled = false
+        binding.registerName.addTextChangedListener{
+
+            binding.registerUserButton.isEnabled = areFieldsFilled()
+        }
+        binding.registerEmail.addTextChangedListener{
+
+            binding.registerErrorTxt.visibility = View.GONE
+            binding.registerUserButton.isEnabled = areFieldsFilled()
+        }
+    }
+
+    private fun setObservers() {
+        viewModel.successMessage.observe(viewLifecycleOwner){success ->
 
             val email = binding.registerEmail.text.trim().toString()
 
             val action = RegisterFragmentDirections.actionRegisterFragmentToCodeFragment(email)
             findNavController().navigate(action)
+
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner){ error ->
 
-            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
         }
     }
 

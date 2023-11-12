@@ -193,19 +193,19 @@
             android:id="@+id/code_6"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="57dp"
+            android:layout_marginTop="110dp"
             android:ems="10"
             android:imeOptions="actionDone"
             android:inputType="number"
-            android:maxLength="1"
 
+            android:maxLength="1"
             android:textAlignment="center"
             android:textColor="#494949"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/code_5"
-            app:layout_constraintTop_toBottomOf="@+id/code_description" />
+            app:layout_constraintTop_toBottomOf="@+id/code_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

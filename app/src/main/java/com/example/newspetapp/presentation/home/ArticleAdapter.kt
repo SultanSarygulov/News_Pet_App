@@ -1,5 +1,6 @@
 package com.example.newspetapp.presentation.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,19 +10,22 @@ import com.bumptech.glide.Glide
 import com.example.newspetapp.R
 import com.example.newspetapp.data.module.Article
 import com.example.newspetapp.databinding.ItemArticleBinding
+import com.example.newspetapp.di.Constants.TAG
 
 class ArticleAdapter: ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(ArticleDiffCallback()) {
 
     var onArticleClickListener: ((Article) -> Unit)? = null
-    var onSavedClickListener: ((Article) -> Unit)? = null
+    var onSavedClickListener: ((Article, Boolean) -> Unit)? = null
 
     class ArticleViewHolder(
         private val binding:ItemArticleBinding,
         private val onArticleClickListener:((Article) -> Unit)?,
-        private val onSavedClickListener:((Article) -> Unit)?
+        private val onSavedClickListener:((Article, Boolean) -> Unit)?
     ): RecyclerView.ViewHolder(binding.root){
 
         fun bind(article: Article) = with(binding){
+
+            var isSaved = article.is_favorite
 
             articleCategory.text = article.category.name
             articleTitle.text = article.title
@@ -38,14 +42,24 @@ class ArticleAdapter: ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(Art
 
             saveArticle.setOnClickListener {
 
-                onSavedClickListener?.invoke(article)
+                onSavedClickListener?.invoke(article, isSaved)
+
+
+                if (isSaved){
+                    Log.d(TAG, "isSaved: false")
+                    saveArticle.setImageResource(R.drawable.ic_saved_false)
+                } else {
+                    Log.d(TAG, "isSaved: true")
+                    saveArticle.setImageResource(R.drawable.ic_saved_true)
+                }
+
+                isSaved = !isSaved
             }
 
             if (article.is_favorite){
 
                 saveArticle.setImageResource(R.drawable.ic_saved_true)
             } else {
-
                 saveArticle.setImageResource(R.drawable.ic_saved_false)
             }
 

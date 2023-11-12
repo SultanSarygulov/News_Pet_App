@@ -66,9 +66,9 @@ class SavedFragment : Fragment(), SearchView.OnQueryTextListener {
             findNavController().navigate(action)
         }
 
-        articleAdapter.onSavedClickListener = {article ->
+        articleAdapter.onSavedClickListener = {article, isSaved ->
             val token = "Bearer ${preferences.fetchToken()}"
-            if(article.is_favorite){
+            if(isSaved){
                 viewModel.removeArticle(token, article.id)
             } else {
                 viewModel.saveArticle(token, article.id)

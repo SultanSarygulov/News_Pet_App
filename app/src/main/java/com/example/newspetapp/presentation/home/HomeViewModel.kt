@@ -42,7 +42,7 @@ class HomeViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
                 articlesList.postValue(response.body()?.results)
             } else {
-
+                Log.d(TAG, "getArticlesByCategory: ${response.errorBody()?.string()}")
                 errorMessage.postValue("ERROR")
             }
         }
@@ -92,7 +92,7 @@ class HomeViewModel(private val newsRepository: NewsRepository) : ViewModel() {
             if(response.isSuccessful){
 
 //                articlesList.postValue(response.body())
-                Log.d(TAG, "saveArticle: Success")
+                Log.d(TAG, "removeArticle: Success")
             } else {
 
                 errorMessage.postValue("ERROR")

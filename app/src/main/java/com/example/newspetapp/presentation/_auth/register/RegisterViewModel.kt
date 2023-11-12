@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class RegisterViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
-    val successMessage = MutableLiveData<String>()
+    var successMessage = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
 
     fun registerUser(user: UserRegister){
@@ -22,10 +22,10 @@ class RegisterViewModel(private val authRepository: AuthRepository) : ViewModel(
 
             if(response.isSuccessful){
 
-                successMessage.postValue("YAAAAAAAAAS ")
+                successMessage.postValue(true)
             } else {
 
-                errorMessage.postValue("Ошибка")
+                errorMessage.postValue(response.body()?.error?.email?.get(0) ?: "Неправильно введены данные")
             }
         }
     }
