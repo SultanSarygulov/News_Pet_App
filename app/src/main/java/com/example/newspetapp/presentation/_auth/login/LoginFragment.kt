@@ -75,7 +75,7 @@ class LoginFragment : Fragment() {
 
             preferences.saveToken(it.access)
 
-            Toast.makeText(requireContext(), "Успешеая авторизация", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Успешная авторизация", Toast.LENGTH_SHORT).show()
 
             val authIntent = Intent(requireContext(), MainActivity::class.java)
             authIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)

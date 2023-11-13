@@ -149,7 +149,7 @@ class NewPasswordFragment : Fragment() {
             binding.newPasswordErrorTxt.visibility = View.VISIBLE
             binding.newPasswordErrorTxt.text = errorText
 
-            Toast.makeText(requireContext(), "ERROR", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
         }
     }
 

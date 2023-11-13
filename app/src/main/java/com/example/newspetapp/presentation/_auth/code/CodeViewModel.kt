@@ -17,16 +17,23 @@ class CodeViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
         viewModelScope.launch {
 
-            val confirmationCode = ConfirmationCode(code)
+            try {
 
-            val response = authRepository.confirmCode(confirmationCode)
-            if(response.isSuccessful){
+                val confirmationCode = ConfirmationCode(code)
 
-                successMessage.postValue(response.body())
-            } else {
+                val response = authRepository.confirmCode(confirmationCode)
+                if(response.isSuccessful){
 
-                errorMessage.postValue("Ошибка")
+                    successMessage.postValue(response.body())
+                } else {
+
+                    errorMessage.postValue("Ошибка")
+                }
+
+            } catch (e: Exception){
+                errorMessage.postValue("Что-то пошло не так")
             }
+
         }
     }
 }

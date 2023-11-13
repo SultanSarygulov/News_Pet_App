@@ -19,19 +19,26 @@ class NewPasswordViewModel(private val authRepository: AuthRepository) : ViewMod
         passwordConfirm: String
     ){
 
-        viewModelScope.launch{
 
-            val passwordChange = PasswordChange(password, passwordConfirm)
+        try {
 
-            val response = authRepository.changePassword(accessToken, passwordChange)
+            viewModelScope.launch{
 
-            if(response.isSuccessful){
+                val passwordChange = PasswordChange(password, passwordConfirm)
 
-                successMessage.postValue("YAAAAAAAAAS ")
-            } else {
+                val response = authRepository.changePassword(accessToken, passwordChange)
 
-                errorMessage.postValue("Ошибка")
+                if(response.isSuccessful){
+
+                    successMessage.postValue("YAAAAAAAAAS ")
+                } else {
+
+                    errorMessage.postValue("Ошибка")
+                }
             }
+
+        } catch (e: Exception){
+            errorMessage.postValue("Что-то пошло не так")
         }
     }
 }

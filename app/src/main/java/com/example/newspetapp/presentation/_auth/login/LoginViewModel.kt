@@ -1,5 +1,6 @@
 package com.example.newspetapp.presentation._auth.login
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +9,9 @@ import com.example.newspetapp.data.module.UserLogin
 import com.example.newspetapp.data.module.UserRegister
 import com.example.newspetapp.data.module.UserTokens
 import com.example.newspetapp.data.repository.AuthRepository
+import com.example.newspetapp.di.Constants.TAG
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
@@ -17,22 +20,29 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     fun loginUser(email:String, password:String ){
 
-        viewModelScope.launch{
+        try{
 
-            val user= UserLogin(
-                email,
-                password
-            )
+            viewModelScope.launch{
 
-            val response = authRepository.loginUser(user)
+                val user= UserLogin(
+                    email,
+                    password
+                )
 
-            if(response.isSuccessful){
+                val response = authRepository.loginUser(user)
 
-                successMessage.postValue(response.body())
-            } else {
+                if(response.isSuccessful){
 
-                errorMessage.postValue("Ошибка")
+                    successMessage.postValue(response.body())
+                } else {
+
+                    errorMessage.postValue("Ошибка")
+                }
             }
+        } catch (e: IOException){
+            Log.d(TAG, "loginUser: IOException")
+            errorMessage.postValue("Что-то пошло не так")
         }
+
     }
 }

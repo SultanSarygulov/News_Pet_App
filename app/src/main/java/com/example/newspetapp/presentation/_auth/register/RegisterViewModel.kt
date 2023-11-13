@@ -16,17 +16,24 @@ class RegisterViewModel(private val authRepository: AuthRepository) : ViewModel(
 
     fun registerUser(user: UserRegister){
 
-        viewModelScope.launch{
 
-            val response = authRepository.registerUser(user)
+        try {
 
-            if(response.isSuccessful){
+            viewModelScope.launch{
 
-                successMessage.postValue(true)
-            } else {
+                val response = authRepository.registerUser(user)
 
-                errorMessage.postValue(response.body()?.error?.email?.get(0) ?: "Неправильно введены данные")
+                if(response.isSuccessful){
+
+                    successMessage.postValue(true)
+                } else {
+
+                    errorMessage.postValue(response.body()?.error?.email?.get(0) ?: "Неправильно введены данные")
+                }
             }
+
+        } catch (e: Exception){
+            errorMessage.postValue("Что-то пошло не так")
         }
     }
 }
