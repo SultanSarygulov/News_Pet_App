@@ -1,6 +1,8 @@
 package com.example.newspetapp.data.api
 
 import com.example.newspetapp.data.module.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -77,10 +79,13 @@ interface Api {
         @Header("Authorization") accessToken: String,
     ): Response<UserProfile>
 
+    @Multipart
     @PUT("users/user-profile/")
     suspend fun editUserInfo(
         @Header("Authorization") accessToken: String,
-        @Body data: User
+        @Part("email") email: RequestBody,
+        @Part("first_name") firstName: RequestBody,
+        @Part image: MultipartBody.Part
     ): Response<Message>
 
 

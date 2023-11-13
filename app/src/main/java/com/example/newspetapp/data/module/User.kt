@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import retrofit2.http.Part
 
 @Parcelize
 data class User(

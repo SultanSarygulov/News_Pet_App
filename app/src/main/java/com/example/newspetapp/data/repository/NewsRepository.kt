@@ -2,6 +2,8 @@ package com.example.newspetapp.data.repository
 
 import com.example.newspetapp.data.api.Api
 import com.example.newspetapp.data.module.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 
 class NewsRepository(private val api: Api) {
@@ -46,8 +48,13 @@ class NewsRepository(private val api: Api) {
         return api.getUserInfo(token)
     }
 
-    suspend fun editUserInfo(token: String, user: User): Response<Message>{
+    suspend fun editUserInfo(
+        token: String,
+        email: RequestBody,
+        name: RequestBody,
+        pictures: MultipartBody.Part
+    ): Response<Message>{
 
-        return api.editUserInfo(token, user)
+        return api.editUserInfo(token, email, name, pictures)
     }
 }

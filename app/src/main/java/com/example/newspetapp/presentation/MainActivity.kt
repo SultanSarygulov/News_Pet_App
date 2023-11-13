@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.newspetapp.R
+import com.example.newspetapp.data.module.UploadRequestBody
 import com.example.newspetapp.data.module.User
 
 class MainActivity : AppCompatActivity() {
