@@ -1,28 +1,27 @@
 package com.example.newspetapp.presentation.home
 
-import androidx.lifecycle.ViewModelProvider
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.MutableLiveData
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.newspetapp.R
-import com.example.newspetapp.data.module.Article
 import com.example.newspetapp.data.module.CustomPreferences
-import com.example.newspetapp.data.module.User
 import com.example.newspetapp.databinding.FragmentHomeBinding
+import com.example.newspetapp.databinding.SnackbarSavedBinding
 import com.example.newspetapp.di.Constants.TAG
-import com.example.newspetapp.presentation.MainActivity.Companion.IMAGE
-import com.example.newspetapp.presentation.MainActivity.Companion.SAVED_MODE
-import com.example.newspetapp.presentation.MainActivity.Companion.TEXT
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipDrawable
+import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.lang.Exception
+
 
 class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
@@ -45,7 +44,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
         val token = "Bearer ${preferences.fetchToken()}"
         viewModel.getArticles(token)
-
+        viewModel.getCategories()
 
         setChips()
 
@@ -90,32 +89,66 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             } else {
                 viewModel.saveArticle(token, article.id)
             }
+
+            showSnackbar(isSaved)
         }
 
 
     }
 
+    private fun showSnackbar(saved: Boolean) {
+        val snackbar = Snackbar.make(this.requireView(), "", Snackbar.LENGTH_SHORT)
+        
+        val customSnackbarView = layoutInflater.inflate(com.example.newspetapp.R.layout.snackbar_saved, null)
+        val snackbarBinding = SnackbarSavedBinding.bind(customSnackbarView)
+        snackbar.view.setBackgroundColor(Color.TRANSPARENT)
+        val snackbarLayout = snackbar.view as Snackbar.SnackbarLayout
+        snackbar.view.setPadding(0, 0, 0, 0)
+        snackbarLayout.addView(customSnackbarView, 0)
+
+        snackbarBinding.snackbarDesc
+        if (!saved){
+            val backgroundColor = Color.parseColor("#6D8DFF")
+            snackbarBinding.snackbarLayout.backgroundTintList = ColorStateList.valueOf(backgroundColor)
+            snackbarBinding.snackbarDesc.text = "Новость добавлена в избранные"
+        } else {
+            val backgroundColor = Color.parseColor("#F34545")
+            snackbarBinding.snackbarLayout.backgroundTintList = ColorStateList.valueOf(backgroundColor)
+            snackbarBinding.snackbarDesc.text = "Новость удалена из избранных"
+        }
+
+        
+        snackbar.show();
+
+    }
+
     private fun setChips() {
 
-        binding.chipGroup.setOnCheckedStateChangeListener { cg, ids->
+        viewModel.categoriesList.observe(viewLifecycleOwner){ categoriesList ->
 
+            binding.chipGroup.removeAllViews()
 
-            val checkedId = try {
-                ids[0]
-            } catch (e: Exception){
-                0
+            categoriesList.forEach { category ->
+                val chip = Chip(requireContext())
+                chip.text = category.name
+
+                binding.chipGroup.addView(chip)
             }
 
-            when(checkedId){
-                binding.all.id -> viewModel.getArticles(token)
-                binding.sport.id -> viewModel.getArticlesByCategory(token,"Спорт")
-                binding.science.id -> viewModel.getArticlesByCategory(token,"Наука")
-                binding.art.id -> viewModel.getArticlesByCategory(token,"Искусство")
-                binding.politics.id -> viewModel.getArticlesByCategory(token,"Политика")
-                0 -> viewModel.getArticles(token)
+            binding.chipGroup.setOnCheckedStateChangeListener { cg, ids->
 
+
+
+//                if (checkedChip != null) {
+//                    val category = checkedChip.text.toString()
+//                    viewModel.getArticlesByCategory(token, category)
+//                } else {
+//                    // No chip selected, you may want to handle this case
+//                    viewModel.getArticles(token)
+//                }
             }
         }
+
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -127,6 +160,8 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(query: String?): Boolean {
         if (!query.isNullOrEmpty()){
             viewModel.searchArticles(token, query)
+        } else {
+            viewModel.getArticles(token)
         }
         return true
     }

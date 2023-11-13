@@ -15,6 +15,7 @@ class HomeViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     val articlesList = MutableLiveData<List<Article>>()
     val errorMessage = MutableLiveData<String>()
+    val categoriesList = MutableLiveData<List<Category>>()
 
     fun getArticles(token: String){
 
@@ -25,6 +26,22 @@ class HomeViewModel(private val newsRepository: NewsRepository) : ViewModel() {
             if(response.isSuccessful){
 
                 articlesList.postValue(response.body()?.results)
+            } else {
+
+                errorMessage.postValue("ERROR")
+            }
+        }
+    }
+
+    fun getCategories(){
+
+        viewModelScope.launch {
+
+            val response = newsRepository.getCategories()
+
+            if(response.isSuccessful){
+
+                categoriesList.postValue(response.body())
             } else {
 
                 errorMessage.postValue("ERROR")

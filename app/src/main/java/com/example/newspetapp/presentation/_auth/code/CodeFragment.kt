@@ -1,5 +1,6 @@
 package com.example.newspetapp.presentation._auth.code
 
+import android.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -174,6 +175,12 @@ class CodeFragment : Fragment() {
 
             binding.codeError.visibility = View.VISIBLE
             binding.codeDescription.visibility = View.GONE
+            binding.code1.setTextColor(Color.parseColor("F34545"))
+            binding.code2.setTextColor(Color.parseColor("F34545"))
+            binding.code3.setTextColor(Color.parseColor("F34545"))
+            binding.code4.setTextColor(Color.parseColor("F34545"))
+            binding.code5.setTextColor(Color.parseColor("F34545"))
+            binding.code6.setTextColor(Color.parseColor("F34545"))
         }
 
 

@@ -57,4 +57,9 @@ class NewsRepository(private val api: Api) {
 
         return api.editUserInfo(token, email, name, pictures)
     }
+
+    suspend fun getCategories(): Response<List<Category>>{
+
+        return api.getCategories()
+    }
 }

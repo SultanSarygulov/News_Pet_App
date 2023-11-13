@@ -88,6 +88,9 @@ interface Api {
         @Part image: MultipartBody.Part
     ): Response<Message>
 
+    @GET("news/category/")
+    suspend fun getCategories(
+    ): Response<List<Category>>
 
 
 }

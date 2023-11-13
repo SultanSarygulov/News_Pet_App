@@ -82,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_rounded_corners"
                 android:text="Все"
+                android:visibility="gone"
                 app:chipCornerRadius="50dp" />
 
             <com.google.android.material.chip.Chip
@@ -90,6 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Спорт"
+                android:visibility="gone"
                 app:chipCornerRadius="50dp" />
 
             <com.google.android.material.chip.Chip
@@ -98,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Наука"
+                android:visibility="gone"
                 app:chipCornerRadius="50dp" />
 
             <com.google.android.material.chip.Chip
@@ -106,6 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Искусство"
+                android:visibility="gone"
                 app:chipCornerRadius="50dp" />
 
             <com.google.android.material.chip.Chip
@@ -114,6 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Политика"
+                android:visibility="gone"
                 app:chipCornerRadius="50dp" />
         </com.google.android.material.chip.ChipGroup>
 

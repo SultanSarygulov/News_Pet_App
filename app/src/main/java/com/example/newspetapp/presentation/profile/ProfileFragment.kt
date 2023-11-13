@@ -2,6 +2,8 @@ package com.example.newspetapp.presentation.profile
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -19,6 +21,7 @@ import com.example.newspetapp.data.module.UserProfile
 import com.example.newspetapp.databinding.DialogLogoutBinding
 import com.example.newspetapp.databinding.FragmentHomeBinding
 import com.example.newspetapp.databinding.FragmentProfileBinding
+import com.example.newspetapp.databinding.SnackbarSavedBinding
 import com.example.newspetapp.presentation.MainActivity
 import com.example.newspetapp.presentation.MainActivity.Companion.IMAGE
 import com.example.newspetapp.presentation.MainActivity.Companion.SAVED_MODE
@@ -26,6 +29,7 @@ import com.example.newspetapp.presentation.MainActivity.Companion.TEXT
 import com.example.newspetapp.presentation._auth.AuthActivity
 import com.example.newspetapp.presentation.home.ArticleAdapter
 import com.example.newspetapp.presentation.home.HomeFragment
+import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -99,6 +103,8 @@ class ProfileFragment : Fragment() {
             } else {
                 viewModel.saveArticle(token, article.id)
             }
+
+            showSnackbar(isSaved)
         }
     }
 
@@ -137,6 +143,32 @@ class ProfileFragment : Fragment() {
             .with(requireContext())
             .load(user.pictures ?: R.drawable.ic_null_pfp)
             .into(binding.userProfilePicture)
+    }
+
+    private fun showSnackbar(saved: Boolean) {
+        val snackbar = Snackbar.make(this.requireView(), "", Snackbar.LENGTH_SHORT)
+
+        val customSnackbarView = layoutInflater.inflate(com.example.newspetapp.R.layout.snackbar_saved, null)
+        val snackbarBinding = SnackbarSavedBinding.bind(customSnackbarView)
+        snackbar.view.setBackgroundColor(Color.TRANSPARENT)
+        val snackbarLayout = snackbar.view as Snackbar.SnackbarLayout
+        snackbar.view.setPadding(0, 0, 0, 0)
+        snackbarLayout.addView(customSnackbarView, 0)
+
+        snackbarBinding.snackbarDesc
+        if (!saved){
+            val backgroundColor = Color.parseColor("#6D8DFF")
+            snackbarBinding.snackbarLayout.backgroundTintList = ColorStateList.valueOf(backgroundColor)
+            snackbarBinding.snackbarDesc.text = "Новость добавлена в избранные"
+        } else {
+            val backgroundColor = Color.parseColor("#F34545")
+            snackbarBinding.snackbarLayout.backgroundTintList = ColorStateList.valueOf(backgroundColor)
+            snackbarBinding.snackbarDesc.text = "Новость удалена из избранных"
+        }
+
+
+        snackbar.show();
+
     }
 
 }

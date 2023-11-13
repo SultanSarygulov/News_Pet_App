@@ -1,5 +1,7 @@
 package com.example.newspetapp.presentation.saved
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.newspetapp.R
 import com.example.newspetapp.data.module.CustomPreferences
 import com.example.newspetapp.databinding.FragmentSavedBinding
+import com.example.newspetapp.databinding.SnackbarSavedBinding
 import com.example.newspetapp.presentation.home.ArticleAdapter
+import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
@@ -73,8 +77,35 @@ class SavedFragment : Fragment(), SearchView.OnQueryTextListener {
             } else {
                 viewModel.saveArticle(token, article.id)
             }
+            showSnackbar(isSaved)
         }
 
+
+    }
+
+    private fun showSnackbar(saved: Boolean) {
+        val snackbar = Snackbar.make(this.requireView(), "", Snackbar.LENGTH_SHORT)
+
+        val customSnackbarView = layoutInflater.inflate(com.example.newspetapp.R.layout.snackbar_saved, null)
+        val snackbarBinding = SnackbarSavedBinding.bind(customSnackbarView)
+        snackbar.view.setBackgroundColor(Color.TRANSPARENT)
+        val snackbarLayout = snackbar.view as Snackbar.SnackbarLayout
+        snackbar.view.setPadding(0, 0, 0, 0)
+        snackbarLayout.addView(customSnackbarView, 0)
+
+        snackbarBinding.snackbarDesc
+        if (!saved){
+            val backgroundColor = Color.parseColor("#6D8DFF")
+            snackbarBinding.snackbarLayout.backgroundTintList = ColorStateList.valueOf(backgroundColor)
+            snackbarBinding.snackbarDesc.text = "Новость добавлена в избранные"
+        } else {
+            val backgroundColor = Color.parseColor("#F34545")
+            snackbarBinding.snackbarLayout.backgroundTintList = ColorStateList.valueOf(backgroundColor)
+            snackbarBinding.snackbarDesc.text = "Новость удалена из избранных"
+        }
+
+
+        snackbar.show();
 
     }
 
