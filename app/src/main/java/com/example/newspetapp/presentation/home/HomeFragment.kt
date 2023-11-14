@@ -127,25 +127,33 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         viewModel.categoriesList.observe(viewLifecycleOwner){ categoriesList ->
 
             binding.chipGroup.removeAllViews()
+            var selectedChip: Chip? = null
 
             categoriesList.forEach { category ->
-                val chip = Chip(requireContext())
+                val chip = layoutInflater.inflate(R.layout.chip_layout, binding.chipGroup, false) as Chip
                 chip.text = category.name
+                chip.isClickable = true
 
                 binding.chipGroup.addView(chip)
-            }
 
-            binding.chipGroup.setOnCheckedStateChangeListener { cg, ids->
+                chip.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        // A chip is selected, perform any actions you need
+                        // For example, you can store the selected category or trigger some functionality
+                        val selectedCategory = category.name
 
+                        Log.d(TAG, "setChips: $selectedCategory")
+                        selectedChip?.isChecked = false
 
+                        // Update the currently selected chip
+                        selectedChip = chip
 
-//                if (checkedChip != null) {
-//                    val category = checkedChip.text.toString()
-//                    viewModel.getArticlesByCategory(token, category)
-//                } else {
-//                    // No chip selected, you may want to handle this case
-//                    viewModel.getArticles(token)
-//                }
+                        viewModel.getArticlesByCategory(token, selectedCategory)
+                    } else {
+                        // Handle the case where the chip is unchecked (optional)
+                        viewModel.getArticles(token)
+                    }
+                }
             }
         }
 

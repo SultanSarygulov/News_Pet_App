@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,9 @@ import com.example.newspetapp.R
 import com.example.newspetapp.data.module.CustomPreferences
 import com.example.newspetapp.databinding.FragmentSavedBinding
 import com.example.newspetapp.databinding.SnackbarSavedBinding
+import com.example.newspetapp.di.Constants
 import com.example.newspetapp.presentation.home.ArticleAdapter
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,6 +44,7 @@ class SavedFragment : Fragment(), SearchView.OnQueryTextListener {
 
         val token = "Bearer ${preferences.fetchToken()}"
         viewModel.getSavedArticles(token)
+        viewModel.getCategories()
 
 
         setChips()
@@ -83,6 +87,8 @@ class SavedFragment : Fragment(), SearchView.OnQueryTextListener {
 
     }
 
+
+
     private fun showSnackbar(saved: Boolean) {
         val snackbar = Snackbar.make(this.requireView(), "", Snackbar.LENGTH_SHORT)
 
@@ -111,24 +117,39 @@ class SavedFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun setChips() {
 
-        binding.chipGroup.setOnCheckedStateChangeListener { cg, ids->
+        viewModel.categoriesList.observe(viewLifecycleOwner){ categoriesList ->
 
+            binding.chipGroup.removeAllViews()
+            var selectedChip: Chip? = null
 
-            val checkedId = try {
-                ids[0]
-            } catch (e: Exception){
-                0
-            }
+            categoriesList.forEach { category ->
+                val chip = layoutInflater.inflate(R.layout.chip_layout, binding.chipGroup, false) as Chip
+                chip.text = category.name
+                chip.isClickable = true
 
-            when(checkedId){
-                binding.all.id -> viewModel.getSavedArticles(token)
-                binding.sport.id -> viewModel.getArticlesByCategory(token,"Спорт")
-                binding.science.id -> viewModel.getArticlesByCategory(token,"Наука")
-                binding.art.id -> viewModel.getArticlesByCategory(token,"Искусство")
-                0 -> viewModel.getSavedArticles(token)
+                binding.chipGroup.addView(chip)
 
+                chip.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        // A chip is selected, perform any actions you need
+                        // For example, you can store the selected category or trigger some functionality
+                        val selectedCategory = category.name
+
+                        Log.d(Constants.TAG, "setChips: $selectedCategory")
+                        selectedChip?.isChecked = false
+
+                        // Update the currently selected chip
+                        selectedChip = chip
+
+                        viewModel.getArticlesByCategory(token, selectedCategory)
+                    } else {
+                        // Handle the case where the chip is unchecked (optional)
+                        viewModel.getSavedArticles(token)
+                    }
+                }
             }
         }
+
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

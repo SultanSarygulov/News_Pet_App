@@ -15,6 +15,7 @@
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/appbar.xml" value="0.33" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.203125" />
+        <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/chip_layout.xml" value="0.203125" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/dialog_connection_lost.xml" value="0.20416666666666666" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/dialog_logout.xml" value="0.203125" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_article.xml" value="0.33" />
@@ -27,6 +28,7 @@
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_register.xml" value="0.17207207207207206" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_saved.xml" value="0.20416666666666666" />
+        <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_search.xml" value="0.20416666666666666" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/fragment_welcome.xml" value="0.2" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/item_article.xml" value="0.75" />
         <entry key="..\:/NeobisProjects/NewsPetApp/app/src/main/res/layout/snackbar_saved.xml" value="0.4254498714652956" />

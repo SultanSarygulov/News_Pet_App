@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newspetapp.data.module.AddToFavourites
 import com.example.newspetapp.data.module.Article
+import com.example.newspetapp.data.module.Category
 import com.example.newspetapp.data.repository.NewsRepository
 import com.example.newspetapp.di.Constants
 import kotlinx.coroutines.launch
@@ -14,6 +15,7 @@ class SavedViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     val articlesList = MutableLiveData<List<Article>>()
     val errorMessage = MutableLiveData<String>()
+    val categoriesList = MutableLiveData<List<Category>>()
 
     fun getSavedArticles(token: String){
 
@@ -24,6 +26,22 @@ class SavedViewModel(private val newsRepository: NewsRepository) : ViewModel() {
             if(response.isSuccessful){
 
                 articlesList.postValue(response.body()?.results?.map { it.news })
+            } else {
+
+                errorMessage.postValue("ERROR")
+            }
+        }
+    }
+
+    fun getCategories(){
+
+        viewModelScope.launch {
+
+            val response = newsRepository.getCategories()
+
+            if(response.isSuccessful){
+
+                categoriesList.postValue(response.body())
             } else {
 
                 errorMessage.postValue("ERROR")

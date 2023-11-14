@@ -73,17 +73,7 @@
             android:id="@+id/chip_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/all"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_rounded_corners"
-                android:text="Все"
-                android:visibility="gone"
-                app:chipCornerRadius="50dp" />
+            app:singleSelection="false">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/sport"
