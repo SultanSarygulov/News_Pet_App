@@ -57,6 +57,7 @@ interface Api {
 
     @GET("news/detail/{id}/")
     suspend fun readArticle(
+        @Header("Authorization") accessToken: String,
         @Path("id") id: Int
     ): Response<Article>
 

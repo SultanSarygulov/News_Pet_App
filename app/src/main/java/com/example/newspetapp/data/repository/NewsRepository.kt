@@ -23,9 +23,9 @@ class NewsRepository(private val api: Api) {
         return api.searchArticles(token, query)
     }
 
-    suspend fun readArticle(id: Int): Response<Article>{
+    suspend fun readArticle(token:String, id: Int): Response<Article>{
 
-        return api.readArticle(id)
+        return api.readArticle(token, id)
     }
 
     suspend fun getSavedArticles(token: String): Response<FavouriteNews>{

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_article">
+
+    <ImageView
+        android:id="@+id/this_article_image"
+        android:layout_width="0dp"
+        android:layout_height="480dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/chinese_boy" />
+
+
+    <TextView
+        android:id="@+id/this_article_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        android:text="Добавленно 24 июль 2023"
+        android:textColor="#C0C0C0"
+        app:layout_constraintBottom_toBottomOf="@+id/this_article_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/this_article_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="Принцу Джорджу 10 лет: новое фото будущего короля Британии"
+        android:textColor="@color/white"
+        android:textFontWeight="900"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/this_article_date"
+        app:layout_constraintEnd_toEndOf="@+id/this_article_date"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/this_article_date" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/this_article_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="#6D8DFF"
+        android:backgroundTint="#6D8DFF"
+        android:text="Спорт"
+        android:textColor="@color/white"
+        android:textFontWeight="700"
+        android:textSize="19sp"
+        app:chipEndPadding="12dp"
+        app:chipStartPadding="12dp"
+        app:closeIconEndPadding="11dp"
+        app:closeIconStartPadding="11dp"
+        app:iconEndPadding="11dp"
+        app:layout_constraintBottom_toTopOf="@+id/this_article_title"
+        app:layout_constraintStart_toStartOf="@+id/this_article_title"
+        app:textEndPadding="11dp"
+        app:textStartPadding="11dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

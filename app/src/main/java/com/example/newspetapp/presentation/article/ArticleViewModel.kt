@@ -15,11 +15,11 @@ class ArticleViewModel(private val newsRepository: NewsRepository) : ViewModel()
     val successMessage = MutableLiveData<Article>()
     val errorMessage = MutableLiveData<String>()
 
-    fun readArticle(id: Int){
+    fun readArticle(token: String, id: Int){
 
         viewModelScope.launch {
 
-            val response = newsRepository.readArticle(id)
+            val response = newsRepository.readArticle(token, id)
 
             if(response.isSuccessful){
 

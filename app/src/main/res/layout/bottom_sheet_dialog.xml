@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="350dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_rounded_corners"
+        android:backgroundTint="@color/white"
+        app:layout_behavior=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/bottomSheetText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="72dp"
+            android:text="TextView"
+            android:textColor="#494949"
+            android:textSize="16sp"
+            tools:text="На снимке Джордж, второй в очереди на престол, сидит на ступеньках в Виндзоре. Вопреки традиции, его сделала фотограф Милли Пилкингтон, а не мать Джорджа, принцесса Уэльская, которая часто фотографировала своих детей на прошлые дни рождения. Принц Джордж только что закончил свой первый год обучения в частной школе Lambrook School в Беркшире, где он учится вместе со своими младшими сестрой и братом, Шарлоттой и Луи, с сентября прошлого года, после того как семья переехала в Виндзор. До этого, пока семья жила в Кенсингтонском дворце, принц Джордж учился в престижной частной школе Thomas's Battersea на юго-западе Лондона. Начало летних каникул принца Джорджа было насыщенным: в прошлое воскресенье он с родителями и 8-летней Шарлоттой смотрел финал Уимблдона, на котором Карлос Алькарас победил Новака Джоковича. За несколько дней до того Джордж с Шарлоттой и Луи посетили авиашоу в Глостершире, а в начале июля принц сходил со своим отцом принцем Уильямом на матч по крикету Ashes в Lord's. Принц Джордж родился 22 июля 2013 года в частной больнице Сент-Мэри в Лондоне." />
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

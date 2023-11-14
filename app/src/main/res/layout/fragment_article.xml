@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".presentation.article.ArticleFragment">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="1dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_gravity="center">
 
             <ImageView
                 android:id="@+id/back_button"
@@ -29,7 +28,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="#F2F2F2"
+                android:background="@drawable/shape_rounded_corners"
+                android:backgroundTint="#F2F2F2"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:src="@drawable/ic_arrow_left"
@@ -44,7 +44,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:background="#F2F2F2"
+                android:background="@drawable/shape_rounded_corners"
+                android:backgroundTint="#F2F2F2"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:src="@drawable/ic_saved_false"
@@ -52,85 +53,104 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="#494949" />
+
+            <TextView
+                android:id="@+id/appbar_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:text="Title"
+                android:maxLines="1"
+                android:visibility="invisible"
+                android:textColor="#494949"
+                android:textSize="18sp"
+                android:textFontWeight="900"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/save_article_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/back_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </com.google.android.material.appbar.AppBarLayout>
 
-        
-        <ImageView
-            android:id="@+id/this_article_image"
-            android:layout_width="0dp"
-            android:layout_height="480dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <include android:id="@+id/content"
+        layout="@layout/fragment_article_content"/>
+    <include android:id="@+id/bottom_sheet"
+        layout="@layout/bottom_sheet_dialog"/>
 
-        <TextView
-            android:id="@+id/this_article_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingTop="24dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="72dp"
-            android:text="TextView"
-            android:textColor="#494949"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/this_article_image"
-            app:layout_constraintVertical_bias="0.0"
-            tools:text="На снимке Джордж, второй в очереди на престол, сидит на ступеньках в Виндзоре. Вопреки традиции, его сделала фотограф Милли Пилкингтон, а не мать Джорджа, принцесса Уэльская, которая часто фотографировала своих детей на прошлые дни рождения. Принц Джордж только что закончил свой первый год обучения в частной школе Lambrook School в Беркшире, где он учится вместе со своими младшими сестрой и братом, Шарлоттой и Луи, с сентября прошлого года, после того как семья переехала в Виндзор. До этого, пока семья жила в Кенсингтонском дворце, принц Джордж учился в престижной частной школе Thomas's Battersea на юго-западе Лондона. Начало летних каникул принца Джорджа было насыщенным: в прошлое воскресенье он с родителями и 8-летней Шарлоттой смотрел финал Уимблдона, на котором Карлос Алькарас победил Новака Джоковича. За несколько дней до того Джордж с Шарлоттой и Луи посетили авиашоу в Глостершире, а в начале июля принц сходил со своим отцом принцем Уильямом на матч по крикету Ashes в Lord's. Принц Джордж родился 22 июля 2013 года в частной больнице Сент-Мэри в Лондоне." />
+    <ProgressBar
+        android:id="@+id/articleProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/this_article_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="12dp"
-            android:text="Добавленно 24 июль 2023"
-            android:textColor="#C0C0C0"
-            app:layout_constraintBottom_toBottomOf="@+id/this_article_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/this_article_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:text="Принцу Джорджу 10 лет: новое фото будущего короля Британии"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textFontWeight="900"
-            app:layout_constraintBottom_toTopOf="@+id/this_article_date"
-            app:layout_constraintEnd_toEndOf="@+id/this_article_date"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/this_article_date" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/this_article_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:background="#6D8DFF"
-            android:backgroundTint="#6D8DFF"
-            android:text="Спорт"
-            android:textFontWeight="700"
-            android:textColor="@color/white"
-            android:textSize="19sp"
-            app:chipEndPadding="12dp"
-            app:chipStartPadding="12dp"
-            app:closeIconEndPadding="11dp"
-            app:closeIconStartPadding="11dp"
-            app:iconEndPadding="11dp"
-            app:layout_constraintBottom_toTopOf="@+id/this_article_title"
-            app:layout_constraintStart_toStartOf="@+id/this_article_title"
-            app:textEndPadding="11dp"
-            app:textStartPadding="11dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/this_article_text"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:paddingStart="16dp"-->
+<!--                android:paddingTop="24dp"-->
+<!--                android:paddingEnd="16dp"-->
+<!--                android:paddingBottom="72dp"-->
+<!--                android:text="TextView"-->
+<!--                android:textColor="#494949"-->
+<!--                android:textSize="16sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.0"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/this_article_image"-->
+<!--                app:layout_constraintVertical_bias="0.0"-->
+<!--                tools:text="На снимке Джордж, второй в очереди на престол, сидит на ступеньках в Виндзоре. Вопреки традиции, его сделала фотограф Милли Пилкингтон, а не мать Джорджа, принцесса Уэльская, которая часто фотографировала своих детей на прошлые дни рождения. Принц Джордж только что закончил свой первый год обучения в частной школе Lambrook School в Беркшире, где он учится вместе со своими младшими сестрой и братом, Шарлоттой и Луи, с сентября прошлого года, после того как семья переехала в Виндзор. До этого, пока семья жила в Кенсингтонском дворце, принц Джордж учился в престижной частной школе Thomas's Battersea на юго-западе Лондона. Начало летних каникул принца Джорджа было насыщенным: в прошлое воскресенье он с родителями и 8-летней Шарлоттой смотрел финал Уимблдона, на котором Карлос Алькарас победил Новака Джоковича. За несколько дней до того Джордж с Шарлоттой и Луи посетили авиашоу в Глостершире, а в начале июля принц сходил со своим отцом принцем Уильямом на матч по крикету Ashes в Lord's. Принц Джордж родился 22 июля 2013 года в частной больнице Сент-Мэри в Лондоне." />-->
+
+
+    <!--    <androidx.core.widget.NestedScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="350dp"-->
+    <!--        android:background="@drawable/shape_rounded_corners"-->
+    <!--        android:backgroundTint="@color/white"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_behavior="@string/app_name">-->
+
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/textView"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:paddingStart="16dp"-->
+    <!--            android:paddingTop="24dp"-->
+    <!--            android:paddingEnd="16dp"-->
+    <!--            android:paddingBottom="72dp"-->
+    <!--            android:text="На снимке Джордж, второй в очереди на престол, сидит на ступеньках в Виндзоре. Вопреки традиции, его сделала фотограф Милли Пилкингтон, а не мать Джорджа, принцесса Уэльская, которая часто фотографировала своих детей на прошлые дни рождения. Принц Джордж только что закончил свой первый год обучения в частной школе Lambrook School в Беркшире, где он учится вместе со своими младшими сестрой и братом, Шарлоттой и Луи, с сентября прошлого года, после того как семья переехала в Виндзор. До этого, пока семья жила в Кенсингтонском дворце, принц Джордж учился в престижной частной школе Thomas's Battersea на юго-западе Лондона. Начало летних каникул принца Джорджа было насыщенным: в прошлое воскресенье он с родителями и 8-летней Шарлоттой смотрел финал Уимблдона, на котором Карлос Алькарас победил Новака Джоковича. За несколько дней до того Джордж с Шарлоттой и Луи посетили авиашоу в Глостершире, а в начале июля принц сходил со своим отцом принцем Уильямом на матч по крикету Ashes в Lord's. Принц Джордж родился 22 июля 2013 года в частной больнице Сент-Мэри в Лондоне." />-->
+    <!--    </androidx.core.widget.NestedScrollView>-->
+
+<!--    <include-->
+<!--        android:id="@+id/bottomSheet"-->
+<!--        layout="@layout/bottom_sheet_dialog"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+
+
