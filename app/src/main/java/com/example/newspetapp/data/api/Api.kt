@@ -41,7 +41,7 @@ interface Api {
     @GET("news/list/")
     suspend fun searchArticles(
         @Header("Authorization") accessToken: String,
-        @Query("search") searchQuery: String
+        @Query("search") searchQuery: String?
     ): Response<ArticlesList>
 
     @GET("news/list/")

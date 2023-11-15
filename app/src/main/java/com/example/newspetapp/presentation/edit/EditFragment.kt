@@ -77,6 +77,7 @@ class EditFragment : Fragment(), UploadRequestBody.UploadCallback {
         binding.confirmEditProfile.setOnClickListener {
 
             uploadImage()
+            binding.editProfileProgressBar.visibility = View.VISIBLE
         }
 
         binding.editUserImageTxt.setOnClickListener {
@@ -100,7 +101,7 @@ class EditFragment : Fragment(), UploadRequestBody.UploadCallback {
         val file = File(activity?.cacheDir, activity?.contentResolver!!.getFileName(selectedImageUri!!) )
         val outputStream = FileOutputStream(file)
         inputStream.copyTo(outputStream)
-        val body = UploadRequestBody(file, "image", this)
+        val body = UploadRequestBody(file, "multipart/form-data", this)
 
         Log.d(TAG, "uploadImage: ${body}")
 
@@ -110,7 +111,7 @@ class EditFragment : Fragment(), UploadRequestBody.UploadCallback {
             binding.editEmail.text.toString(),
             binding.editName.text.toString(),
             MultipartBody.Part.createFormData(
-                "image/jpeg",
+                "pictures",
                 file.name,
                 body
             )
@@ -127,8 +128,6 @@ class EditFragment : Fragment(), UploadRequestBody.UploadCallback {
 
             startActivityForResult(intent, IMAGE_REQUEST_CODE)
         }
-
-
     }
 
     // Set Image to ImageButton
@@ -137,8 +136,6 @@ class EditFragment : Fragment(), UploadRequestBody.UploadCallback {
 
             if (requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK){
 
-//                val imagePath: Uri? = data?.data
-//                binding.editProfilePicture.setImageURI(imagePath)
                 when(requestCode){
                     IMAGE_REQUEST_CODE ->{
                         selectedImageUri = data?.data
@@ -190,7 +187,7 @@ class EditFragment : Fragment(), UploadRequestBody.UploadCallback {
     }
 
     companion object{
-        const val IMAGE_REQUEST_CODE = 100
+        const val IMAGE_REQUEST_CODE = 101
     }
 
 }

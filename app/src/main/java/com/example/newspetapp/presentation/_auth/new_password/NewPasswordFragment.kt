@@ -48,8 +48,8 @@ class NewPasswordFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            if(passwordCorrect()){
-
+            if(!passwordCorrect()){
+                repeatPasswordCorrect()
                 return@setOnClickListener
             }
 
@@ -61,9 +61,8 @@ class NewPasswordFragment : Fragment() {
         }
     }
 
-    private fun passwordCorrect(): Boolean {
+    private fun repeatPasswordCorrect(): Boolean{
 
-        val newPasswordText = binding.enterNewPasswordEt.text.toString().trim()
         val repeatNewPasswordText = binding.repeatNewPasswordEt.text.toString().trim()
 
         if (repeatNewPasswordText.isNullOrEmpty()){
@@ -75,11 +74,28 @@ class NewPasswordFragment : Fragment() {
         } else if (repeatNewPasswordText.length < 8){
             binding.repeatNewPassword.error = "Пароль слишком короткий!"
             return false
+        } else if (!repeatNewPasswordText.any { it.isUpperCase() }){
+            binding.repeatNewPassword.error = "Пароль должен иметь 1 заглавную букву!"
+            return false
+        } else if (!repeatNewPasswordText.any { it.isDigit() }){
+            binding.repeatNewPassword.error = "Пароль должен иметь 1 цифру!"
+            return false
         } else if ( binding.repeatNewPasswordEt.text.toString().trim() !=
             binding.enterNewPasswordEt.text.toString().trim()){
-            binding.repeatNewPassword.error = "Пароли не совпадают!"
+            binding.newPasswordDescription.visibility = View.INVISIBLE
+            binding.newPasswordErrorTxt.visibility = View.VISIBLE
+            binding.newPasswordErrorTxt.text = "Пароли не совпадают"
             return false
         }
+
+        binding.repeatNewPassword.error = null
+        return true
+    }
+
+    private fun passwordCorrect(): Boolean {
+
+        val newPasswordText = binding.enterNewPasswordEt.text.toString().trim()
+
 
         if (newPasswordText.isNullOrEmpty()){
             binding.enterNewPassword.error = "Поля пустые!"
@@ -93,6 +109,9 @@ class NewPasswordFragment : Fragment() {
         } else if (!newPasswordText.any { it.isUpperCase() }){
             binding.enterNewPassword.error = "Пароль должен иметь 1 заглавную букву!"
             return false
+        } else if (!newPasswordText.any { it.isDigit() }){
+            binding.enterNewPassword.error = "Пароль должен иметь 1 цифру!"
+            return false
         } else if ( binding.repeatNewPasswordEt.text.toString().trim() !=
             binding.enterNewPasswordEt.text.toString().trim()){
             binding.enterNewPassword.error = "Пароли не совпадают!"
@@ -100,14 +119,13 @@ class NewPasswordFragment : Fragment() {
         }
 
         binding.enterNewPassword.error = null
-        binding.repeatNewPassword.error = null
 
         return true
 
     }
 
     private fun isPasswordInvalid(password: String): Boolean{
-        val regex = Regex("[^a-zA-Z0-9]")
+        val regex = Regex("[^a-zA-Z0-9!@_#]")
         return regex.containsMatchIn(password)
     }
 
@@ -147,9 +165,9 @@ class NewPasswordFragment : Fragment() {
 
             binding.newPasswordDescription.visibility = View.INVISIBLE
             binding.newPasswordErrorTxt.visibility = View.VISIBLE
-            binding.newPasswordErrorTxt.text = errorText
+            binding.newPasswordErrorTxt.text = "Неправильно введены данные"
 
-            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
         }
     }
 

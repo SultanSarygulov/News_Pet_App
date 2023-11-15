@@ -11,6 +11,8 @@ import android.widget.Button
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.newspetapp.R
 import com.example.newspetapp.data.module.CustomPreferences
 import com.example.newspetapp.databinding.FragmentHomeBinding
@@ -29,6 +31,14 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     private val viewModel by viewModel<HomeViewModel>()
     private val preferences by inject<CustomPreferences>()
     val token by lazy {   "Bearer ${preferences.fetchToken()}"}
+
+    private var previousTotal = 0
+    private var loading = true
+    private val visibleThreshold = 5
+    private var mLayoutManager: LinearLayoutManager? = null
+    private var pastVisibleItem: Int = 0
+    private var visibleItemCount: Int = 0
+    private var totalItemCount: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +61,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.searchNews.setOnQueryTextListener(this)
 
         setAdapter()
+        setUpPagination()
 
         binding.userProfile.setOnClickListener {
 
@@ -61,9 +72,12 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun setAdapter() {
 
+        mLayoutManager = LinearLayoutManager(requireContext())
+
 
         val articleAdapter = ArticleAdapter()
         binding.articlesList.adapter = articleAdapter
+        binding.articlesList.layoutManager = mLayoutManager
         viewModel.articlesList.observe(viewLifecycleOwner){articlesList ->
 
             articleAdapter.submitList(articlesList)
@@ -150,13 +164,39 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
                         viewModel.getArticlesByCategory(token, selectedCategory)
                     } else {
-                        // Handle the case where the chip is unchecked (optional)
-                        viewModel.getArticles(token)
+                        if( binding.chipGroup.checkedChipId == -1 ){
+                            viewModel.getArticles(token)
+                        }
+//
                     }
                 }
             }
         }
+    }
 
+    private fun setUpPagination(){
+
+        binding.articlesList.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+
+                if(dy>0){
+                    visibleItemCount = mLayoutManager!!.childCount
+                    totalItemCount = mLayoutManager!!.itemCount
+                    pastVisibleItem = mLayoutManager!!.findFirstVisibleItemPosition()
+
+                    if(loading){
+                        if(visibleItemCount + pastVisibleItem >= totalItemCount){
+
+                            loading = false
+                            viewModel.getArticles(token)
+                            loading = true
+                        }
+                    }
+                }
+            }
+        })
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
