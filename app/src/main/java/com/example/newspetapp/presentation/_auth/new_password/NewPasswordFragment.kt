@@ -1,5 +1,6 @@
 package com.example.newspetapp.presentation._auth.new_password
 
+import android.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
@@ -40,6 +41,8 @@ class NewPasswordFragment : Fragment() {
         setFieldChangeListeners()
 
         setObservers()
+
+        setTextChangedListeners()
 
         binding.createNewPasswordButton.setOnClickListener {
 
@@ -114,7 +117,8 @@ class NewPasswordFragment : Fragment() {
             return false
         } else if ( binding.repeatNewPasswordEt.text.toString().trim() !=
             binding.enterNewPasswordEt.text.toString().trim()){
-            binding.enterNewPassword.error = "Пароли не совпадают!"
+            binding.enterNewPasswordEt.setTextColor(Color.parseColor("#F34545"))
+            binding.repeatNewPasswordEt.setTextColor(Color.parseColor("#F34545"))
             return false
         }
 
@@ -122,6 +126,19 @@ class NewPasswordFragment : Fragment() {
 
         return true
 
+    }
+
+    fun setTextChangedListeners(){
+
+        binding.repeatNewPasswordEt.addTextChangedListener { et ->
+            binding.repeatNewPasswordEt.setTextColor(Color.parseColor("#FF000000"))
+            binding.repeatNewPassword.error = null
+        }
+
+        binding.enterNewPasswordEt.addTextChangedListener { et ->
+            binding.enterNewPasswordEt.setTextColor(Color.parseColor("#FF000000"))
+            binding.enterNewPassword.error = null
+        }
     }
 
     private fun isPasswordInvalid(password: String): Boolean{
@@ -143,8 +160,6 @@ class NewPasswordFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.successMessage.observe(viewLifecycleOwner){
-
-            Toast.makeText(requireContext(), "Успешеая регистрация", Toast.LENGTH_SHORT).show()
 
             val action = NewPasswordFragmentDirections.actionNewPasswordFragmentToLoginFragment()
             findNavController().navigate(action)

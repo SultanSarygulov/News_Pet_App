@@ -52,6 +52,7 @@ class CodeFragment : Fragment() {
 
         binding.resendCode.setOnClickListener {
 
+            viewModel.resendCode(email!!)
             startTimer()
         }
 

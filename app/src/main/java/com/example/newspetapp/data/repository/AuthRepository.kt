@@ -11,6 +11,11 @@ class AuthRepository(private val api: Api) {
         return api.loginUser(user)
     }
 
+    suspend fun resendCode(email: UserEmail): Response<UserEmail> {
+
+        return api.resendCode(email)
+    }
+
     suspend fun registerUser(user: UserRegister): Response<Message> {
 
         return api.registerUser(user)

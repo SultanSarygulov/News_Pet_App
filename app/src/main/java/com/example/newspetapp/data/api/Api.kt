@@ -27,6 +27,12 @@ interface Api {
     ): Response<Message>
 
     @Headers("Content-Type: application/json")
+    @POST("users/resend-confirmation/")
+    suspend fun resendCode(
+        @Body data: UserEmail
+    ): Response<UserEmail>
+
+    @Headers("Content-Type: application/json")
     @PUT("users/change-password/")
     suspend fun changePassword(
         @Header("Authorization") accessToken: String,

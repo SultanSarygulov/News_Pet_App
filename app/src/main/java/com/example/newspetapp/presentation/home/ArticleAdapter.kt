@@ -2,6 +2,7 @@ package com.example.newspetapp.presentation.home
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -16,6 +17,11 @@ class ArticleAdapter: ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(Art
 
     var onArticleClickListener: ((Article) -> Unit)? = null
     var onSavedClickListener: ((Article, Boolean) -> Unit)? = null
+
+    class ProgressBarViewHolder(item: View): RecyclerView.ViewHolder(item){
+
+
+    }
 
     class ArticleViewHolder(
         private val binding:ItemArticleBinding,
@@ -84,8 +90,17 @@ class ArticleAdapter: ListAdapter<Article, ArticleAdapter.ArticleViewHolder>(Art
             return oldItem == newItem
         }
 
-
     }
 
+    override fun getItemViewType(position: Int): Int{
+
+        if (getItem(position)!= null){
+
+            return 0
+        } else {
+
+            return 1
+        }
+    }
 
 }

@@ -35,7 +35,6 @@ class AuthActivity : AppCompatActivity() {
 
                 showInternetDialog()
 
-                Toast.makeText(this, "NOOOO CONNNECTIIIOON", Toast.LENGTH_SHORT).show()
             }
 
         }.launchIn(lifecycleScope)
